@@ -1,0 +1,3573 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResultDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "登录接口",
+        "tags": [
+          "01.认证中心"
+        ]
+      }
+    },
+    "/api/v1/auth/logout": {
+      "delete": {
+        "operationId": "AuthController_logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "注销登录",
+        "tags": [
+          "01.认证中心"
+        ]
+      }
+    },
+    "/api/v1/auth/captcha": {
+      "get": {
+        "operationId": "AuthController_getCode",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取验证码",
+        "tags": [
+          "01.认证中心"
+        ]
+      }
+    },
+    "/api/v1/auth/refresh-token": {
+      "post": {
+        "operationId": "AuthController_refreshToken",
+        "parameters": [
+          {
+            "name": "refreshToken",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "刷新令牌",
+        "tags": [
+          "01.认证中心"
+        ]
+      }
+    },
+    "/api/v1/users/me": {
+      "get": {
+        "operationId": "UserController_getCurrentUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取当前登录用户信息",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/profile": {
+      "get": {
+        "operationId": "UserController_getUserProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取个人中心用户信息",
+        "tags": [
+          "02.用户接口"
+        ]
+      },
+      "put": {
+        "operationId": "UserController_updateUserProfile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "个人中心修改用户信息",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/template": {
+      "get": {
+        "operationId": "UserController_downloadTemplate",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "用户导入模板下载",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/export": {
+      "get": {
+        "operationId": "UserController_exportUsers",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keywords",
+            "required": false,
+            "in": "query",
+            "description": "关键字(用户名/昵称/手机号)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "用户状态(1-正常 0-禁用)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "deptId",
+            "required": false,
+            "in": "query",
+            "description": "部门ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "roleIds",
+            "required": false,
+            "in": "query",
+            "description": "角色ID集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          {
+            "name": "createTime",
+            "required": false,
+            "in": "query",
+            "description": "创建时间范围",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "导出用户",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/options": {
+      "get": {
+        "operationId": "UserController_listUserOptions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取用户下拉选项",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users": {
+      "post": {
+        "operationId": "UserController_createUser",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "新增用户",
+        "tags": [
+          "02.用户接口"
+        ]
+      },
+      "get": {
+        "operationId": "UserController_getUserPage",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keywords",
+            "required": false,
+            "in": "query",
+            "description": "关键字(用户名/昵称/手机号)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "用户状态(1-正常 0-禁用)",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "deptId",
+            "required": false,
+            "in": "query",
+            "description": "部门ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "roleIds",
+            "required": false,
+            "in": "query",
+            "description": "角色ID集合",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          {
+            "name": "createTime",
+            "required": false,
+            "in": "query",
+            "description": "创建时间范围",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "用户分页列表",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/{id}/form": {
+      "get": {
+        "operationId": "UserController_getUserFormData",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取用户表单数据",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/{id}": {
+      "put": {
+        "operationId": "UserController_updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "修改用户",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/{ids}": {
+      "delete": {
+        "operationId": "UserController_deleteUsers",
+        "parameters": [
+          {
+            "name": "ids",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除用户",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/{userId}/status": {
+      "patch": {
+        "operationId": "UserController_updateUserStatus",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "修改用户状态",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/{userId}/password/reset": {
+      "put": {
+        "operationId": "UserController_resetUserPassword",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "重置指定用户密码",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/password": {
+      "put": {
+        "operationId": "UserController_changeCurrentUserPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordChangeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "当前用户修改密码",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/users/import": {
+      "post": {
+        "operationId": "UserController_importUsers",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "导入用户",
+        "tags": [
+          "02.用户接口"
+        ]
+      }
+    },
+    "/api/v1/roles/options": {
+      "get": {
+        "operationId": "RoleController_getRoleOptions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "角色下拉列表",
+        "tags": [
+          "03.角色接口"
+        ]
+      }
+    },
+    "/api/v1/roles": {
+      "get": {
+        "operationId": "RoleController_getRolePage",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "角色分页列表",
+        "tags": [
+          "03.角色接口"
+        ]
+      },
+      "post": {
+        "operationId": "RoleController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRoleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "新增角色",
+        "tags": [
+          "03.角色接口"
+        ]
+      }
+    },
+    "/api/v1/roles/{id}/form": {
+      "get": {
+        "operationId": "RoleController_getRoleForm",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "角色表单数据",
+        "tags": [
+          "03.角色接口"
+        ]
+      }
+    },
+    "/api/v1/roles/{id}": {
+      "put": {
+        "operationId": "RoleController_updateRole",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateRoleDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "修改角色",
+        "tags": [
+          "03.角色接口"
+        ]
+      }
+    },
+    "/api/v1/roles/{roleId}/status": {
+      "put": {
+        "operationId": "RoleController_updateRoleStatus",
+        "parameters": [
+          {
+            "name": "roleId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "修改角色状态",
+        "tags": [
+          "03.角色接口"
+        ]
+      }
+    },
+    "/api/v1/roles/{ids}": {
+      "delete": {
+        "operationId": "RoleController_deleteRoles",
+        "parameters": [
+          {
+            "name": "ids",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除角色",
+        "tags": [
+          "03.角色接口"
+        ]
+      }
+    },
+    "/api/v1/roles/{id}/menu-ids": {
+      "get": {
+        "operationId": "RoleController_findMenuIds",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取角色权限",
+        "tags": [
+          "03.角色接口"
+        ]
+      }
+    },
+    "/api/v1/roles/{id}/menus": {
+      "put": {
+        "operationId": "RoleController_updateMenus",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "角色分配权限",
+        "tags": [
+          "03.角色接口"
+        ]
+      }
+    },
+    "/api/v1/depts/options": {
+      "get": {
+        "operationId": "DeptController_getOptions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "部门下拉列表",
+        "tags": [
+          "05.部门接口"
+        ]
+      }
+    },
+    "/api/v1/depts": {
+      "get": {
+        "operationId": "DeptController_findAll",
+        "parameters": [
+          {
+            "name": "keywords",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取部门表格树形列表",
+        "tags": [
+          "05.部门接口"
+        ]
+      },
+      "post": {
+        "operationId": "DeptController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDeptDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "创建部门",
+        "tags": [
+          "05.部门接口"
+        ]
+      }
+    },
+    "/api/v1/depts/{id}/form": {
+      "get": {
+        "operationId": "DeptController_getDeptForm",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取部门详情",
+        "tags": [
+          "05.部门接口"
+        ]
+      }
+    },
+    "/api/v1/depts/{id}": {
+      "put": {
+        "operationId": "DeptController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "编辑部门",
+        "tags": [
+          "05.部门接口"
+        ]
+      }
+    },
+    "/api/v1/depts/{ids}": {
+      "delete": {
+        "operationId": "DeptController_deleteDepartments",
+        "parameters": [
+          {
+            "name": "ids",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除部门",
+        "tags": [
+          "05.部门接口"
+        ]
+      }
+    },
+    "/api/v1/menus/routes": {
+      "get": {
+        "operationId": "MenuController_getRoutes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取路由列表",
+        "tags": [
+          "04.菜单接口"
+        ]
+      }
+    },
+    "/api/v1/menus/options": {
+      "get": {
+        "operationId": "MenuController_getMenuOptions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "菜单下拉树形列表",
+        "tags": [
+          "04.菜单接口"
+        ]
+      }
+    },
+    "/api/v1/menus": {
+      "get": {
+        "operationId": "MenuController_getMenus",
+        "parameters": [
+          {
+            "name": "keywords",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取菜单列表",
+        "tags": [
+          "04.菜单接口"
+        ]
+      },
+      "post": {
+        "operationId": "MenuController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMenuDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "新增菜单",
+        "tags": [
+          "04.菜单接口"
+        ]
+      }
+    },
+    "/api/v1/menus/{id}/form": {
+      "get": {
+        "operationId": "MenuController_getMenuForm",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取菜单表单数据",
+        "tags": [
+          "04.菜单接口"
+        ]
+      }
+    },
+    "/api/v1/menus/{id}": {
+      "put": {
+        "operationId": "MenuController_updateMenu",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMenuDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "修改菜单",
+        "tags": [
+          "04.菜单接口"
+        ]
+      },
+      "patch": {
+        "operationId": "MenuController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "visible",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "修改菜单显示状态",
+        "tags": [
+          "04.菜单接口"
+        ]
+      },
+      "delete": {
+        "operationId": "MenuController_deleteMenu",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除菜单",
+        "tags": [
+          "04.菜单接口"
+        ]
+      }
+    },
+    "/api/v1/logs": {
+      "get": {
+        "operationId": "LogController_getLogPage",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keywords",
+            "required": false,
+            "in": "query",
+            "description": "关键字(日志内容/请求路径/请求方法/地区/浏览器/终端系统)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "createTime",
+            "required": false,
+            "in": "query",
+            "description": "操作时间范围 [开始, 结束]",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "日志分页列表",
+        "tags": [
+          "09.日志接口"
+        ]
+      }
+    },
+    "/api/v1/logs/analytics/trend": {
+      "get": {
+        "operationId": "LogController_getVisitTrend",
+        "parameters": [
+          {
+            "name": "startDate",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "endDate",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "访问趋势统计",
+        "tags": [
+          "09.日志接口"
+        ]
+      }
+    },
+    "/api/v1/logs/analytics/overview": {
+      "get": {
+        "operationId": "LogController_getVisitOverview",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "访问统计概览",
+        "tags": [
+          "09.日志接口"
+        ]
+      }
+    },
+    "/api/v1/dicts": {
+      "get": {
+        "operationId": "DictController_getDictPage",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "字典分页列表",
+        "tags": [
+          "06.字典接口"
+        ]
+      },
+      "post": {
+        "operationId": "DictController_createDict",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DictFormDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "新增字典",
+        "tags": [
+          "06.字典接口"
+        ]
+      }
+    },
+    "/api/v1/dicts/options": {
+      "get": {
+        "operationId": "DictController_getDictOptions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "字典下拉选项",
+        "tags": [
+          "06.字典接口"
+        ]
+      }
+    },
+    "/api/v1/dicts/{id}/form": {
+      "get": {
+        "operationId": "DictController_getDictForm",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "字典表单",
+        "tags": [
+          "06.字典接口"
+        ]
+      }
+    },
+    "/api/v1/dicts/{id}": {
+      "put": {
+        "operationId": "DictController_updateDict",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDictDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "更新字典",
+        "tags": [
+          "06.字典接口"
+        ]
+      }
+    },
+    "/api/v1/dicts/{ids}": {
+      "delete": {
+        "operationId": "DictController_deleteDict",
+        "parameters": [
+          {
+            "name": "ids",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除字典",
+        "tags": [
+          "06.字典接口"
+        ]
+      }
+    },
+    "/api/v1/dicts/{dictCode}/items": {
+      "get": {
+        "operationId": "DictController_getDictItemPage",
+        "parameters": [
+          {
+            "name": "dictCode",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "字典项分页列表",
+        "tags": [
+          "06.字典接口"
+        ]
+      },
+      "post": {
+        "operationId": "DictController_createDictItem",
+        "parameters": [
+          {
+            "name": "dictCode",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDictItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "新增字典项",
+        "tags": [
+          "06.字典接口"
+        ]
+      }
+    },
+    "/api/v1/dicts/{dictCode}/items/options": {
+      "get": {
+        "operationId": "DictController_getDictItems",
+        "parameters": [
+          {
+            "name": "dictCode",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取列表",
+        "tags": [
+          "06.字典接口"
+        ]
+      }
+    },
+    "/api/v1/dicts/{dictCode}/items/{itemId}/form": {
+      "get": {
+        "operationId": "DictController_getDictItemForm",
+        "parameters": [
+          {
+            "name": "itemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "字典项表单数据",
+        "tags": [
+          "06.字典接口"
+        ]
+      }
+    },
+    "/api/v1/dicts/{dictCode}/items/{itemId}": {
+      "put": {
+        "operationId": "DictController_updateDictItem",
+        "parameters": [
+          {
+            "name": "itemId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDictItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "更新字典项",
+        "tags": [
+          "06.字典接口"
+        ]
+      }
+    },
+    "/api/v1/dicts/{dictCode}/items/{itemIds}": {
+      "delete": {
+        "operationId": "DictController_deleteDictItems",
+        "parameters": [
+          {
+            "name": "itemIds",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除字典项",
+        "tags": [
+          "06.字典接口"
+        ]
+      }
+    },
+    "/api/v1/sse/connect": {
+      "get": {
+        "operationId": "SseController_connect",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "建立SSE连接",
+        "tags": [
+          "13. SSE连接"
+        ]
+      }
+    },
+    "/api/v1/sse/online-count": {
+      "get": {
+        "operationId": "SseController_getOnlineCount",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "获取在线用户数",
+        "tags": [
+          "13. SSE连接"
+        ]
+      }
+    },
+    "/api/v1/configs": {
+      "get": {
+        "operationId": "ConfigController_page",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keywords",
+            "required": false,
+            "in": "query",
+            "description": "关键字",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "系统配置分页列表",
+        "tags": [
+          "07.系统配置"
+        ]
+      },
+      "post": {
+        "operationId": "ConfigController_saveConfig",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateConfigDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "新增系统配置",
+        "tags": [
+          "07.系统配置"
+        ]
+      }
+    },
+    "/api/v1/configs/{id}/form": {
+      "get": {
+        "operationId": "ConfigController_getConfigForm",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取系统配置表单数据",
+        "tags": [
+          "07.系统配置"
+        ]
+      }
+    },
+    "/api/v1/configs/refresh": {
+      "put": {
+        "operationId": "ConfigController_refreshCache",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "刷新系统配置缓存",
+        "tags": [
+          "07.系统配置"
+        ]
+      }
+    },
+    "/api/v1/configs/{id}": {
+      "put": {
+        "operationId": "ConfigController_updateConfig",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateConfigDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "修改系统配置",
+        "tags": [
+          "07.系统配置"
+        ]
+      },
+      "delete": {
+        "operationId": "ConfigController_deleteConfig",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除系统配置",
+        "tags": [
+          "07.系统配置"
+        ]
+      }
+    },
+    "/api/v1/files": {
+      "post": {
+        "operationId": "FileController_upload",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "上传文件",
+        "tags": [
+          "10.文件接口"
+        ]
+      },
+      "delete": {
+        "operationId": "FileController_delete",
+        "parameters": [
+          {
+            "name": "filePath",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除文件",
+        "tags": [
+          "10.文件接口"
+        ]
+      }
+    },
+    "/api/v1/notices": {
+      "get": {
+        "operationId": "NoticeController_getNoticePage",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "通知公告分页列表",
+        "tags": [
+          "08.通知公告"
+        ]
+      },
+      "post": {
+        "operationId": "NoticeController_saveNotice",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNoticeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "新增通知公告",
+        "tags": [
+          "08.通知公告"
+        ]
+      }
+    },
+    "/api/v1/notices/{id}/form": {
+      "get": {
+        "operationId": "NoticeController_getNoticeForm",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取通知公告表单数据",
+        "tags": [
+          "08.通知公告"
+        ]
+      }
+    },
+    "/api/v1/notices/{id}/detail": {
+      "get": {
+        "operationId": "NoticeController_getNoticeDetail",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "阅读获取通知公告详情",
+        "tags": [
+          "08.通知公告"
+        ]
+      }
+    },
+    "/api/v1/notices/read-all": {
+      "put": {
+        "operationId": "NoticeController_readAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "全部已读",
+        "tags": [
+          "08.通知公告"
+        ]
+      }
+    },
+    "/api/v1/notices/{id}": {
+      "put": {
+        "operationId": "NoticeController_updateNotice",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNoticeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "修改通知公告",
+        "tags": [
+          "08.通知公告"
+        ]
+      }
+    },
+    "/api/v1/notices/{id}/publish": {
+      "put": {
+        "operationId": "NoticeController_publishNotice",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "发布通知公告",
+        "tags": [
+          "08.通知公告"
+        ]
+      }
+    },
+    "/api/v1/notices/{id}/revoke": {
+      "put": {
+        "operationId": "NoticeController_revokeNotice",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "撤回通知公告",
+        "tags": [
+          "08.通知公告"
+        ]
+      }
+    },
+    "/api/v1/notices/{ids}": {
+      "delete": {
+        "operationId": "NoticeController_deleteNotices",
+        "parameters": [
+          {
+            "name": "ids",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除通知公告",
+        "tags": [
+          "08.通知公告"
+        ]
+      }
+    },
+    "/api/v1/notices/my": {
+      "get": {
+        "operationId": "NoticeController_getMyNoticePage",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "获取我的通知公告分页列表",
+        "tags": [
+          "08.通知公告"
+        ]
+      }
+    },
+    "/api/v1/blog/posts": {
+      "get": {
+        "operationId": "BlogPostController_getPage",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "required": false,
+            "in": "query",
+            "description": "文章标题（模糊搜索）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "publishStatus",
+            "required": false,
+            "in": "query",
+            "description": "发布状态(0-草稿 1-已发布)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "文章分页列表",
+        "tags": [
+          "09.博客文章"
+        ]
+      },
+      "post": {
+        "operationId": "BlogPostController_save",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogPostFormDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "创建文章",
+        "tags": [
+          "09.博客文章"
+        ]
+      }
+    },
+    "/api/v1/blog/posts/{id}": {
+      "get": {
+        "operationId": "BlogPostController_getDetail",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "文章详情",
+        "tags": [
+          "09.博客文章"
+        ]
+      },
+      "put": {
+        "operationId": "BlogPostController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogPostFormDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "更新文章",
+        "tags": [
+          "09.博客文章"
+        ]
+      }
+    },
+    "/api/v1/blog/posts/{ids}": {
+      "delete": {
+        "operationId": "BlogPostController_delete",
+        "parameters": [
+          {
+            "name": "ids",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除文章",
+        "tags": [
+          "09.博客文章"
+        ]
+      }
+    },
+    "/api/v1/blog/posts/{id}/publish": {
+      "put": {
+        "operationId": "BlogPostController_publish",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogPostPublishDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "发布/下线文章",
+        "tags": [
+          "09.博客文章"
+        ]
+      }
+    },
+    "/api/v1/templates": {
+      "get": {
+        "operationId": "TemplateController_getPage",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "description": "模板名称（模糊搜索）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "code",
+            "required": false,
+            "in": "query",
+            "description": "模板编码",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "状态(1启用/0禁用)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "模板分页列表",
+        "tags": [
+          "10.模板管理"
+        ]
+      },
+      "post": {
+        "operationId": "TemplateController_save",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TemplateFormDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "创建模板",
+        "tags": [
+          "10.模板管理"
+        ]
+      }
+    },
+    "/api/v1/templates/{id}": {
+      "get": {
+        "operationId": "TemplateController_getDetail",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "模板详情",
+        "tags": [
+          "10.模板管理"
+        ]
+      },
+      "put": {
+        "operationId": "TemplateController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TemplateFormDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "更新模板",
+        "tags": [
+          "10.模板管理"
+        ]
+      }
+    },
+    "/api/v1/templates/{ids}": {
+      "delete": {
+        "operationId": "TemplateController_delete",
+        "parameters": [
+          {
+            "name": "ids",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除模板",
+        "tags": [
+          "10.模板管理"
+        ]
+      }
+    },
+    "/api/v1/pages": {
+      "get": {
+        "operationId": "PageController_getPage",
+        "parameters": [
+          {
+            "name": "pageNum",
+            "required": false,
+            "in": "query",
+            "description": "页码",
+            "schema": {
+              "minimum": 1,
+              "default": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "pageSize",
+            "required": false,
+            "in": "query",
+            "description": "每页记录数",
+            "schema": {
+              "minimum": 1,
+              "maximum": 100,
+              "default": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "sortBy",
+            "required": false,
+            "in": "query",
+            "description": "排序字段",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "required": false,
+            "in": "query",
+            "description": "排序方式（ASC/DESC）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "required": false,
+            "in": "query",
+            "description": "页面标题（模糊搜索）",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "slug",
+            "required": false,
+            "in": "query",
+            "description": "URL路径(slug)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "发布状态(0-草稿 1-已发布)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "页面分页列表",
+        "tags": [
+          "11.页面管理"
+        ]
+      },
+      "post": {
+        "operationId": "PageController_save",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PageFormDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "创建页面",
+        "tags": [
+          "11.页面管理"
+        ]
+      }
+    },
+    "/api/v1/pages/nav": {
+      "get": {
+        "operationId": "PageController_getNavList",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "导航列表（已发布）",
+        "tags": [
+          "11.页面管理"
+        ]
+      }
+    },
+    "/api/v1/pages/{id}": {
+      "get": {
+        "operationId": "PageController_getDetail",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "页面详情",
+        "tags": [
+          "11.页面管理"
+        ]
+      },
+      "put": {
+        "operationId": "PageController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PageFormDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "更新页面",
+        "tags": [
+          "11.页面管理"
+        ]
+      }
+    },
+    "/api/v1/pages/slug/{slug}": {
+      "get": {
+        "operationId": "PageController_getDetailBySlug",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "按slug获取页面",
+        "tags": [
+          "11.页面管理"
+        ]
+      }
+    },
+    "/api/v1/pages/{ids}": {
+      "delete": {
+        "operationId": "PageController_delete",
+        "parameters": [
+          {
+            "name": "ids",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "删除页面",
+        "tags": [
+          "11.页面管理"
+        ]
+      }
+    },
+    "/api/v1/pages/{id}/status": {
+      "put": {
+        "operationId": "PageController_updateStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PageStatusDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "发布/下线页面",
+        "tags": [
+          "11.页面管理"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "youlai-nest",
+    "description": "youlai 全家桶（Node/Nest 11）权限管理后台接口文档",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "LoginRequestDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "admin",
+            "description": "用户名"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456",
+            "description": "密码"
+          },
+          "captchaCode": {
+            "type": "string",
+            "example": "9099",
+            "description": "验证码"
+          },
+          "captchaId": {
+            "type": "string",
+            "example": "998899",
+            "description": "验证码ID"
+          }
+        },
+        "required": [
+          "username",
+          "password",
+          "captchaCode",
+          "captchaId"
+        ]
+      },
+      "LoginResultDto": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "访问令牌"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "刷新令牌"
+          },
+          "expiresIn": {
+            "type": "number",
+            "description": "令牌过期时间(秒)"
+          },
+          "tokenType": {
+            "type": "string",
+            "description": "令牌类型"
+          }
+        },
+        "required": [
+          "accessToken",
+          "refreshToken",
+          "expiresIn",
+          "tokenType"
+        ]
+      },
+      "UserProfileDto": {
+        "type": "object",
+        "properties": {
+          "nickname": {
+            "type": "string",
+            "description": "昵称"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "头像地址"
+          },
+          "gender": {
+            "type": "number",
+            "description": "性别(1-男 2-女 0-保密)"
+          }
+        }
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "gender": {
+            "type": "number",
+            "description": "性别(1-男 2-女 0-保密)"
+          },
+          "password": {
+            "type": "string",
+            "description": "密码"
+          },
+          "deptId": {
+            "type": "string",
+            "description": "部门ID"
+          },
+          "deptName": {
+            "type": "string",
+            "description": "部门名称"
+          },
+          "deptTreePath": {
+            "type": "string",
+            "description": "部门树路径"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "头像"
+          },
+          "mobile": {
+            "type": "string",
+            "description": "手机号"
+          },
+          "status": {
+            "type": "number",
+            "description": "状态(1-正常 0-禁用)"
+          },
+          "email": {
+            "type": "string",
+            "description": "邮箱"
+          },
+          "roleIds": {
+            "description": "角色ID集合",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "salt": {
+            "type": "string",
+            "description": "密码盐"
+          },
+          "perms": {
+            "description": "权限标识集合",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "password",
+          "deptTreePath"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID"
+          },
+          "username": {
+            "type": "string",
+            "description": "用户名"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "昵称"
+          },
+          "gender": {
+            "type": "number",
+            "description": "性别(1-男 2-女 0-保密)"
+          },
+          "password": {
+            "type": "string",
+            "description": "密码"
+          },
+          "deptId": {
+            "type": "string",
+            "description": "部门ID"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "头像"
+          },
+          "mobile": {
+            "type": "string",
+            "description": "手机号"
+          },
+          "status": {
+            "type": "number",
+            "description": "状态(1-正常 0-禁用)"
+          },
+          "email": {
+            "type": "string",
+            "description": "邮箱"
+          },
+          "roleIds": {
+            "description": "角色ID集合",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "roles": {
+            "description": "角色列表",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createTime": {
+            "format": "date-time",
+            "type": "string",
+            "description": "创建时间"
+          },
+          "createBy": {
+            "type": "string",
+            "description": "创建人ID"
+          },
+          "updateTime": {
+            "format": "date-time",
+            "type": "string",
+            "description": "更新时间"
+          },
+          "updateBy": {
+            "type": "string",
+            "description": "更新人ID"
+          },
+          "isDeleted": {
+            "type": "number",
+            "description": "是否删除"
+          }
+        },
+        "required": [
+          "id",
+          "username",
+          "nickname",
+          "gender",
+          "password",
+          "deptId",
+          "avatar",
+          "mobile",
+          "status",
+          "email",
+          "roleIds",
+          "roles",
+          "createTime",
+          "createBy",
+          "updateTime",
+          "updateBy",
+          "isDeleted"
+        ]
+      },
+      "PasswordChangeDto": {
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "description": "原密码"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "新密码"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "description": "确认密码"
+          }
+        },
+        "required": [
+          "oldPassword",
+          "newPassword",
+          "confirmPassword"
+        ]
+      },
+      "CreateRoleDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateRoleDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateDeptDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateMenuDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateMenuDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "DictFormDto": {
+        "type": "object",
+        "properties": {
+          "dictCode": {
+            "type": "string",
+            "description": "字典编码"
+          },
+          "name": {
+            "type": "string",
+            "description": "字典名称"
+          },
+          "status": {
+            "type": "number",
+            "description": "状态(0:正常;1:禁用)"
+          },
+          "remark": {
+            "type": "string",
+            "description": "备注"
+          }
+        },
+        "required": [
+          "dictCode",
+          "name",
+          "status",
+          "remark"
+        ]
+      },
+      "UpdateDictDto": {
+        "type": "object",
+        "properties": {
+          "dictCode": {
+            "type": "string",
+            "description": "字典编码"
+          },
+          "name": {
+            "type": "string",
+            "description": "字典名称"
+          },
+          "status": {
+            "type": "number",
+            "description": "状态(0:正常;1:禁用)"
+          },
+          "remark": {
+            "type": "string",
+            "description": "备注"
+          },
+          "updateBy": {
+            "type": "string",
+            "description": "更新人ID"
+          }
+        },
+        "required": [
+          "dictCode",
+          "name",
+          "status",
+          "remark",
+          "updateBy"
+        ]
+      },
+      "CreateDictItemDto": {
+        "type": "object",
+        "properties": {
+          "dictCode": {
+            "type": "string",
+            "description": "字典编码"
+          },
+          "label": {
+            "type": "string",
+            "description": "字典项标签"
+          },
+          "value": {
+            "type": "string",
+            "description": "字典项值"
+          },
+          "sort": {
+            "type": "number",
+            "description": "排序"
+          },
+          "status": {
+            "type": "number",
+            "description": "状态(1-正常 0-停用)"
+          },
+          "tagType": {
+            "type": "string",
+            "description": "标签类型"
+          },
+          "remark": {
+            "type": "string",
+            "description": "备注"
+          },
+          "createBy": {
+            "type": "string",
+            "description": "创建人ID"
+          }
+        },
+        "required": [
+          "dictCode",
+          "label",
+          "value",
+          "sort",
+          "status",
+          "tagType",
+          "remark",
+          "createBy"
+        ]
+      },
+      "UpdateDictItemDto": {
+        "type": "object",
+        "properties": {
+          "dictCode": {
+            "type": "string",
+            "description": "字典编码"
+          },
+          "label": {
+            "type": "string",
+            "description": "字典项标签"
+          },
+          "value": {
+            "type": "string",
+            "description": "字典项值"
+          },
+          "sort": {
+            "type": "number",
+            "description": "排序"
+          },
+          "status": {
+            "type": "number",
+            "description": "状态(1-正常 0-停用)"
+          },
+          "tagType": {
+            "type": "string",
+            "description": "标签类型"
+          },
+          "remark": {
+            "type": "string",
+            "description": "备注"
+          },
+          "updateBy": {
+            "type": "string",
+            "description": "更新人ID"
+          }
+        },
+        "required": [
+          "dictCode",
+          "label",
+          "value",
+          "sort",
+          "status",
+          "tagType",
+          "remark",
+          "updateBy"
+        ]
+      },
+      "CreateConfigDto": {
+        "type": "object",
+        "properties": {
+          "configName": {
+            "type": "string",
+            "description": "配置名称"
+          },
+          "configKey": {
+            "type": "string",
+            "description": "配置键"
+          },
+          "configValue": {
+            "type": "string",
+            "description": "配置值"
+          },
+          "remark": {
+            "type": "string",
+            "description": "备注"
+          }
+        },
+        "required": [
+          "configName",
+          "configKey",
+          "configValue"
+        ]
+      },
+      "UpdateConfigDto": {
+        "type": "object",
+        "properties": {
+          "configName": {
+            "type": "string",
+            "description": "配置名称"
+          },
+          "configKey": {
+            "type": "string",
+            "description": "配置键"
+          },
+          "configValue": {
+            "type": "string",
+            "description": "配置值"
+          },
+          "remark": {
+            "type": "string",
+            "description": "备注"
+          }
+        }
+      },
+      "CreateNoticeDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "UpdateNoticeDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "BlogPostFormDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "文章标题",
+            "maxLength": 200
+          },
+          "content": {
+            "type": "string",
+            "description": "Markdown文章内容"
+          },
+          "coverImage": {
+            "type": "string",
+            "description": "封面图URL",
+            "maxLength": 255
+          },
+          "summary": {
+            "type": "string",
+            "description": "文章摘要",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "title",
+          "content"
+        ]
+      },
+      "BlogPostPublishDto": {
+        "type": "object",
+        "properties": {
+          "publishStatus": {
+            "type": "number",
+            "description": "发布状态(0-下线 1-发布)",
+            "example": 1
+          }
+        },
+        "required": [
+          "publishStatus"
+        ]
+      },
+      "TemplateFormDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "模板名称",
+            "maxLength": 100
+          },
+          "code": {
+            "type": "string",
+            "description": "模板编码",
+            "maxLength": 50
+          },
+          "description": {
+            "type": "string",
+            "description": "描述",
+            "maxLength": 500
+          },
+          "thumbnail": {
+            "type": "string",
+            "description": "缩略图",
+            "maxLength": 500
+          },
+          "content": {
+            "type": "string",
+            "description": "Puck JSON内容"
+          },
+          "status": {
+            "type": "number",
+            "description": "状态(1启用/0禁用)",
+            "default": 1
+          }
+        },
+        "required": [
+          "name",
+          "code",
+          "content"
+        ]
+      },
+      "PageFormDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "页面标题",
+            "maxLength": 200
+          },
+          "slug": {
+            "type": "string",
+            "description": "URL路径(slug)",
+            "maxLength": 100
+          },
+          "summary": {
+            "type": "string",
+            "description": "页面描述",
+            "maxLength": 500
+          },
+          "coverImage": {
+            "type": "string",
+            "description": "封面图URL",
+            "maxLength": 500
+          },
+          "content": {
+            "type": "string",
+            "description": "Puck JSON内容"
+          },
+          "templateCode": {
+            "type": "string",
+            "description": "关联模板编码",
+            "maxLength": 50
+          },
+          "sort": {
+            "type": "number",
+            "description": "排序号",
+            "default": 0
+          }
+        },
+        "required": [
+          "title",
+          "slug",
+          "content"
+        ]
+      },
+      "PageStatusDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "number",
+            "description": "发布状态(0-下线 1-发布)",
+            "example": 1
+          }
+        },
+        "required": [
+          "status"
+        ]
+      }
+    }
+  }
+}
