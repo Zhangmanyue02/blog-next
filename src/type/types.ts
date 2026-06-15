@@ -19,3 +19,13 @@ export type PageDetail = {
   sort?: number;
   status: PageStatus;
 };
+
+export type PageFormDto = {
+  title: string;
+  slug: string;
+  summary?: string;
+  coverImage?: string;
+  content: string;
+  templateCode?: string;
+  sort?: number;
+};

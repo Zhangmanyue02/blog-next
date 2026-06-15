@@ -1,5 +1,8 @@
 import { notFound } from 'next/navigation';
+import { Render } from '@puckeditor/core/rsc';
 import { getPageBySlug } from '@/api/services/pageService';
+import { getBasicConfig } from '@/configs/puck';
+import type { Data } from '@puckeditor/core';
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -13,28 +16,29 @@ export default async function ContentPage({ params }: Props) {
   const page = await getPageBySlug(slugStr);
   if (!page) notFound();
 
-  let parsed: unknown = null;
+  let data: Data | null = null;
   try {
-    parsed = JSON.parse(page.content);
+    const parsed = JSON.parse(page.content);
+    if (parsed && typeof parsed === 'object' && 'content' in parsed) {
+      data = parsed as Data;
+    }
   } catch {
-    parsed = null;
+    data = null;
+  }
+
+  if (!data) {
+    return (
+      <main className="mx-auto max-w-3xl px-6 py-12">
+        <h1 className="text-3xl font-semibold">{page.title}</h1>
+        {page.summary && <p className="mt-2 text-zinc-600">{page.summary}</p>}
+        <p className="mt-8 text-zinc-500">（页面内容为空或格式异常）</p>
+      </main>
+    );
   }
 
   return (
-    <main className="mx-auto max-w-3xl px-6 py-12">
-      <h1 className="text-3xl font-semibold">{page.title}</h1>
-      {page.summary && (
-        <p className="mt-2 text-zinc-600">{page.summary}</p>
-      )}
-      <article className="mt-8">
-        {parsed ? (
-          <pre className="overflow-auto rounded bg-zinc-50 p-4 text-sm">
-            {JSON.stringify(parsed, null, 2)}
-          </pre>
-        ) : (
-          <p className="text-zinc-500">（无内容或内容格式异常）</p>
-        )}
-      </article>
+    <main>
+      <Render config={getBasicConfig()} data={data} />
     </main>
   );
 }
