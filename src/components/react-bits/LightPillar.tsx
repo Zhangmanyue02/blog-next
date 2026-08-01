@@ -54,6 +54,8 @@ const LightPillar: FC<LightPillarProps> = ({
 		}
 	}, []);
 
+	// Scene rebuild only when quality / WebGL readiness changes; other props update via uniforms
+	// biome-ignore lint/correctness/useExhaustiveDependencies: intentional
 	useEffect(() => {
 		if (!containerRef.current || !webGLSupported) return;
 
@@ -70,7 +72,13 @@ const LightPillar: FC<LightPillarProps> = ({
 
 		const qualitySettings = {
 			low: { iterations: 24, waveIterations: 1, pixelRatio: 0.5, precision: "mediump" as const, stepMultiplier: 1.5 },
-			medium: { iterations: 40, waveIterations: 2, pixelRatio: 0.65, precision: "mediump" as const, stepMultiplier: 1.2 },
+			medium: {
+				iterations: 40,
+				waveIterations: 2,
+				pixelRatio: 0.65,
+				precision: "mediump" as const,
+				stepMultiplier: 1.2,
+			},
 			high: {
 				iterations: 80,
 				waveIterations: 4,
@@ -371,8 +379,6 @@ const LightPillar: FC<LightPillarProps> = ({
 			geometryRef.current = null;
 			rafRef.current = null;
 		};
-		// Scene rebuild only when quality / WebGL readiness changes; other props update via uniforms
-		// biome-ignore lint/correctness/useExhaustiveDependencies: intentional
 	}, [webGLSupported, quality]);
 
 	useEffect(() => {
@@ -445,7 +451,9 @@ const LightPillar: FC<LightPillarProps> = ({
 		);
 	}
 
-	return <div ref={containerRef} className={`absolute top-0 left-0 h-full w-full ${className}`} style={{ mixBlendMode }} />;
+	return (
+		<div ref={containerRef} className={`absolute top-0 left-0 h-full w-full ${className}`} style={{ mixBlendMode }} />
+	);
 };
 
 export default LightPillar;

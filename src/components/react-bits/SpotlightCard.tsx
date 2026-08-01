@@ -52,6 +52,7 @@ const SpotlightCard: FC<SpotlightCardProps> = ({
 	return (
 		<div
 			ref={divRef}
+			tabIndex={0}
 			onMouseMove={handleMouseMove}
 			onFocus={handleFocus}
 			onBlur={handleBlur}
