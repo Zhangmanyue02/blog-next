@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Render } from '@puckeditor/core/rsc';
 import { getPageBySlug } from '@/api/services/pageService';
-import { getBasicConfig } from '@/configs/puck';
-import type { Data } from '@puckeditor/core';
+import { getBasicConfig } from '@/configs/puck';import type { Data } from '@puckeditor/core';
 
 type Props = {
   params: Promise<{ slug: string[] }>;
