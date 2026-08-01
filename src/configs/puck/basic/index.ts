@@ -6,6 +6,7 @@ export { DividerBlock } from "./DividerBlock";
 export { SpacerBlock } from "./SpacerBlock";
 export { FlexBlock } from "./FlexBlock";
 export { GridBlock } from "./GridBlock";
+export { GlassBlock } from "./GlassBlock";
 export { NavbarBlock } from "./NavbarBlock";
 export { FooterBlock } from "./FooterBlock";
 export { BlogHeroBlock } from "./BlogHeroBlock";

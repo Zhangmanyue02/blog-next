@@ -8,6 +8,7 @@ import {
 	SpacerBlock,
 	FlexBlock,
 	GridBlock,
+	GlassBlock,
 	NavbarBlock,
 	FooterBlock,
 	BlogHeroBlock,
@@ -32,7 +33,7 @@ const blogCategories: Config["categories"] = {
 	},
 	布局: {
 		title: "布局",
-		components: ["FlexBlock", "GridBlock"],
+		components: ["FlexBlock", "GridBlock", "GlassBlock"],
 	},
 	站点: {
 		title: "站点",
@@ -67,6 +68,7 @@ const blogComponents = {
 	SpacerBlock,
 	FlexBlock,
 	GridBlock,
+	GlassBlock,
 	NavbarBlock,
 	FooterBlock,
 	BlogHeroBlock,
