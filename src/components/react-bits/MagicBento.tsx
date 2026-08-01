@@ -1,11 +1,17 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type FC, type ReactNode, type RefObject } from "react";
+import {
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+	type CSSProperties,
+	type FC,
+	type ReactNode,
+	type RefObject,
+} from "react";
 import { gsap } from "gsap";
 import { DEFAULT_BENTO_CARDS, type BentoProps } from "./magic-bento-data";
-
-export type { BentoCardProps, BentoProps } from "./magic-bento-data";
-export { DEFAULT_BENTO_CARDS } from "./magic-bento-data";
 
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
@@ -283,7 +289,11 @@ const ParticleCard: FC<{
 	}, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor]);
 
 	return (
-		<div ref={cardRef} className={`${className} relative overflow-hidden`} style={{ ...style, position: "relative", overflow: "hidden" }}>
+		<div
+			ref={cardRef}
+			className={`${className} relative overflow-hidden`}
+			style={{ ...style, position: "relative", overflow: "hidden" }}
+		>
 			{children}
 		</div>
 	);
