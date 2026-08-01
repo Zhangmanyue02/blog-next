@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type CSSProperties, type FC, type MouseEventHandler, type PropsWithChildren } from "react";
+import { type CSSProperties, type FC, type MouseEventHandler, type PropsWithChildren, useRef, useState } from "react";
 
 interface Position {
 	x: number;
@@ -50,9 +50,9 @@ const SpotlightCard: FC<SpotlightCardProps> = ({
 	};
 
 	return (
+		// biome-ignore lint/a11y/noStaticElementInteractions: ReactBits spotlight needs pointer tracking on the card surface
 		<div
 			ref={divRef}
-			tabIndex={0}
 			onMouseMove={handleMouseMove}
 			onFocus={handleFocus}
 			onBlur={handleBlur}
