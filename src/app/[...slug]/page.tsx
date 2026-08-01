@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Render } from '@puckeditor/core/rsc';
 import { getPageBySlug } from '@/api/services/pageService';
-import { getBasicConfig } from '@/configs/puck';import type { Data } from '@puckeditor/core';
+import { getAdvancedConfig } from '@/configs/puck';import type { Data } from '@puckeditor/core';
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -37,7 +37,7 @@ export default async function ContentPage({ params }: Props) {
 
   return (
     <main>
-      <Render config={getBasicConfig()} data={data} />
+      <Render config={getAdvancedConfig()} data={data} />
     </main>
   );
 }
