@@ -216,10 +216,12 @@ const LineWaves: FC<LineWavesProps> = ({
 		});
 
 		function resize() {
-			renderer.setSize(container.offsetWidth, container.offsetHeight);
+			const width = container.offsetWidth;
+			const height = container.offsetHeight;
+			if (width <= 0 || height <= 0) return;
+			renderer.setSize(width, height);
 			program.uniforms.uResolution.value = [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height];
 		}
-		window.addEventListener("resize", resize);
 
 		const mesh = new Mesh(gl, { geometry, program });
 		const canvas = gl.canvas as HTMLCanvasElement;
@@ -227,6 +229,10 @@ const LineWaves: FC<LineWavesProps> = ({
 		canvas.style.height = "100%";
 		canvas.style.display = "block";
 		container.appendChild(canvas);
+
+		resize();
+		const resizeObserver = new ResizeObserver(resize);
+		resizeObserver.observe(container);
 
 		if (enableMouseInteraction) {
 			window.addEventListener("mousemove", handleMouseMove);
@@ -255,7 +261,7 @@ const LineWaves: FC<LineWavesProps> = ({
 
 		return () => {
 			cancelAnimationFrame(animationFrameId);
-			window.removeEventListener("resize", resize);
+			resizeObserver.disconnect();
 			if (enableMouseInteraction) {
 				window.removeEventListener("mousemove", handleMouseMove);
 				container.removeEventListener("mouseleave", handleMouseLeave);

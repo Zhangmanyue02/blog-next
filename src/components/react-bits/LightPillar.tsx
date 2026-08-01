@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type FC } from "react";
+import { type CSSProperties, type FC, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
 export interface LightPillarProps {
@@ -333,25 +333,21 @@ const LightPillar: FC<LightPillarProps> = ({
 		};
 		rafRef.current = requestAnimationFrame(animate);
 
-		let resizeTimeout: number | null = null;
 		const handleResize = () => {
-			if (resizeTimeout) {
-				clearTimeout(resizeTimeout);
-			}
-
-			resizeTimeout = window.setTimeout(() => {
-				if (!rendererRef.current || !materialRef.current || !containerRef.current) return;
-				const newWidth = containerRef.current.clientWidth;
-				const newHeight = containerRef.current.clientHeight;
-				rendererRef.current.setSize(newWidth, newHeight);
-				materialRef.current.uniforms.uResolution.value.set(newWidth, newHeight);
-			}, 150);
+			if (!rendererRef.current || !materialRef.current || !containerRef.current) return;
+			const newWidth = containerRef.current.clientWidth;
+			const newHeight = containerRef.current.clientHeight;
+			if (newWidth <= 0 || newHeight <= 0) return;
+			rendererRef.current.setSize(newWidth, newHeight);
+			materialRef.current.uniforms.uResolution.value.set(newWidth, newHeight);
 		};
 
-		window.addEventListener("resize", handleResize, { passive: true });
+		handleResize();
+		const resizeObserver = new ResizeObserver(handleResize);
+		resizeObserver.observe(container);
 
 		return () => {
-			window.removeEventListener("resize", handleResize);
+			resizeObserver.disconnect();
 			if (interactive) {
 				window.removeEventListener("mousemove", handleMouseMove);
 			}
