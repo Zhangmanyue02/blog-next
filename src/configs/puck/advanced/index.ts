@@ -5,6 +5,7 @@ import { LogoLoopBlock } from "./LogoLoopBlock";
 import { MagicBentoBlock } from "./MagicBentoBlock";
 import { SpotlightCardBlock } from "./SpotlightCardBlock";
 import { TextTypeBlock } from "./TextTypeBlock";
+import { ThreadsBlock } from "./ThreadsBlock";
 
 /** 高级组件（动效/光效等）— 页面/模板编辑器可用 */
 export const advancedComponentMap = {
@@ -15,4 +16,5 @@ export const advancedComponentMap = {
 	MagicBentoBlock,
 	SpotlightCardBlock,
 	TextTypeBlock,
+	ThreadsBlock,
 };
