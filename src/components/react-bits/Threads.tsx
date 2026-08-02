@@ -3,7 +3,7 @@
 import { Color, Mesh, Program, Renderer, Triangle } from "ogl";
 import { type FC, type HTMLAttributes, useEffect, useRef } from "react";
 
-export interface ThreadsProps extends HTMLAttributes<HTMLDivElement> {
+export interface ThreadsProps extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
 	color?: [number, number, number];
 	amplitude?: number;
 	distance?: number;
