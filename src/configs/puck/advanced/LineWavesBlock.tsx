@@ -18,6 +18,7 @@ export type LineWavesBlockProps = {
 	enableMouseInteraction: YesNo;
 	mouseInfluence: number;
 	backgroundColor: string;
+	fullscreen: YesNo;
 	minHeight: number;
 	padding: number;
 	items: Slot;
@@ -48,7 +49,8 @@ export const LineWavesBlock: ComponentConfig<LineWavesBlockProps> = {
 		brightness: { type: "number", label: "亮度" },
 		mouseInfluence: { type: "number", label: "鼠标影响" },
 		enableMouseInteraction: { ...yesNo, label: "鼠标交互" },
-		minHeight: { type: "number", label: "最小高度(px)" },
+		fullscreen: { ...yesNo, label: "全屏高度" },
+		minHeight: { type: "number", label: "最小高度(px，非全屏时)" },
 		padding: { type: "number", label: "内边距(px)" },
 		items: { type: "slot", label: "内容区" },
 	},
@@ -67,6 +69,7 @@ export const LineWavesBlock: ComponentConfig<LineWavesBlockProps> = {
 		enableMouseInteraction: "yes",
 		mouseInfluence: 2,
 		backgroundColor: "#0a0a0a",
+		fullscreen: "no",
 		minHeight: 560,
 		padding: 24,
 		items: [],
@@ -86,41 +89,56 @@ export const LineWavesBlock: ComponentConfig<LineWavesBlockProps> = {
 		enableMouseInteraction,
 		mouseInfluence,
 		backgroundColor,
+		fullscreen,
 		minHeight,
 		padding,
 		items: Items,
-	}) => (
-		<section className="relative w-full overflow-hidden" style={{ minHeight, backgroundColor }}>
-			<div className="pointer-events-none absolute inset-0" aria-hidden>
-				<LineWaves
-					speed={speed}
-					innerLineCount={innerLineCount}
-					outerLineCount={outerLineCount}
-					warpIntensity={warpIntensity}
-					rotation={rotation}
-					edgeFadeWidth={edgeFadeWidth}
-					colorCycleSpeed={colorCycleSpeed}
-					brightness={brightness}
-					color1={color1}
-					color2={color2}
-					color3={color3}
-					enableMouseInteraction={enableMouseInteraction === "yes"}
-					mouseInfluence={mouseInfluence}
-				/>
-			</div>
-			<Items
-				collisionAxis="y"
-				minEmptyHeight={Math.max(minHeight - padding * 2, 80)}
+	}) => {
+		const isFullscreen = fullscreen === "yes";
+		const sectionHeight = isFullscreen ? "100dvh" : minHeight;
+		const contentMinHeight = isFullscreen ? "100dvh" : minHeight;
+
+		return (
+			<section
+				className="relative w-full overflow-hidden"
 				style={{
-					position: "relative",
-					zIndex: 1,
-					display: "flex",
-					flexDirection: "column",
-					minHeight,
-					padding: `${padding}px`,
-					boxSizing: "border-box",
+					minHeight: sectionHeight,
+					height: isFullscreen ? "100dvh" : undefined,
+					backgroundColor,
 				}}
-			/>
-		</section>
-	),
+			>
+				<div className="pointer-events-none absolute inset-0" aria-hidden>
+					<LineWaves
+						speed={speed}
+						innerLineCount={innerLineCount}
+						outerLineCount={outerLineCount}
+						warpIntensity={warpIntensity}
+						rotation={rotation}
+						edgeFadeWidth={edgeFadeWidth}
+						colorCycleSpeed={colorCycleSpeed}
+						brightness={brightness}
+						color1={color1}
+						color2={color2}
+						color3={color3}
+						enableMouseInteraction={enableMouseInteraction === "yes"}
+						mouseInfluence={mouseInfluence}
+					/>
+				</div>
+				<Items
+					collisionAxis="y"
+					minEmptyHeight={isFullscreen ? 560 : Math.max(minHeight - padding * 2, 80)}
+					style={{
+						position: "relative",
+						zIndex: 1,
+						display: "flex",
+						flexDirection: "column",
+						minHeight: contentMinHeight,
+						height: isFullscreen ? "100%" : undefined,
+						padding: `${padding}px`,
+						boxSizing: "border-box",
+					}}
+				/>
+			</section>
+		);
+	},
 };

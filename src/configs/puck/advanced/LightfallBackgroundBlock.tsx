@@ -1,6 +1,8 @@
 import type { ComponentConfig, Slot } from "@puckeditor/core";
 import Lightfall from "@/components/react-bits/Lightfall";
 
+type YesNo = "yes" | "no";
+
 export type LightfallBackgroundBlockProps = {
 	color1: string;
 	color2: string;
@@ -15,10 +17,19 @@ export type LightfallBackgroundBlockProps = {
 	zoom: number;
 	backgroundGlow: number;
 	opacity: number;
-	mouseInteraction: "yes" | "no";
+	mouseInteraction: YesNo;
+	fullscreen: YesNo;
 	minHeight: number;
 	padding: number;
 	items: Slot;
+};
+
+const yesNo = {
+	type: "radio" as const,
+	options: [
+		{ label: "开", value: "yes" },
+		{ label: "关", value: "no" },
+	],
 };
 
 export const LightfallBackgroundBlock: ComponentConfig<LightfallBackgroundBlockProps> = {
@@ -37,15 +48,9 @@ export const LightfallBackgroundBlock: ComponentConfig<LightfallBackgroundBlockP
 		zoom: { type: "number", label: "景深缩放" },
 		backgroundGlow: { type: "number", label: "背景辉光" },
 		opacity: { type: "number", label: "不透明度" },
-		mouseInteraction: {
-			type: "radio",
-			label: "鼠标光晕",
-			options: [
-				{ label: "开", value: "yes" },
-				{ label: "关", value: "no" },
-			],
-		},
-		minHeight: { type: "number", label: "最小高度(px)" },
+		mouseInteraction: { ...yesNo, label: "鼠标光晕" },
+		fullscreen: { ...yesNo, label: "全屏高度" },
+		minHeight: { type: "number", label: "最小高度(px，非全屏时)" },
 		padding: { type: "number", label: "内边距(px)" },
 		items: { type: "slot", label: "内容区" },
 	},
@@ -64,6 +69,7 @@ export const LightfallBackgroundBlock: ComponentConfig<LightfallBackgroundBlockP
 		backgroundGlow: 0.5,
 		opacity: 1,
 		mouseInteraction: "yes",
+		fullscreen: "no",
 		minHeight: 720,
 		padding: 24,
 		items: [],
@@ -83,40 +89,55 @@ export const LightfallBackgroundBlock: ComponentConfig<LightfallBackgroundBlockP
 		backgroundGlow,
 		opacity,
 		mouseInteraction,
+		fullscreen,
 		minHeight,
 		padding,
 		items: Items,
-	}) => (
-		<section className="relative w-full overflow-hidden" style={{ minHeight, backgroundColor }}>
-			<div className="pointer-events-none absolute inset-0" aria-hidden>
-				<Lightfall
-					colors={[color1, color2, color3]}
-					backgroundColor={backgroundColor}
-					speed={speed}
-					streakCount={streakCount}
-					streakWidth={streakWidth}
-					streakLength={streakLength}
-					glow={glow}
-					density={density}
-					zoom={zoom}
-					backgroundGlow={backgroundGlow}
-					opacity={opacity}
-					mouseInteraction={mouseInteraction === "yes"}
-				/>
-			</div>
-			<Items
-				collisionAxis="y"
-				minEmptyHeight={Math.max(minHeight - padding * 2, 80)}
+	}) => {
+		const isFullscreen = fullscreen === "yes";
+		const sectionHeight = isFullscreen ? "100dvh" : minHeight;
+		const contentMinHeight = isFullscreen ? "100dvh" : minHeight;
+
+		return (
+			<section
+				className="relative w-full overflow-hidden"
 				style={{
-					position: "relative",
-					zIndex: 1,
-					display: "flex",
-					flexDirection: "column",
-					minHeight,
-					padding: `${padding}px`,
-					boxSizing: "border-box",
+					minHeight: sectionHeight,
+					height: isFullscreen ? "100dvh" : undefined,
+					backgroundColor,
 				}}
-			/>
-		</section>
-	),
+			>
+				<div className="pointer-events-none absolute inset-0" aria-hidden>
+					<Lightfall
+						colors={[color1, color2, color3]}
+						backgroundColor={backgroundColor}
+						speed={speed}
+						streakCount={streakCount}
+						streakWidth={streakWidth}
+						streakLength={streakLength}
+						glow={glow}
+						density={density}
+						zoom={zoom}
+						backgroundGlow={backgroundGlow}
+						opacity={opacity}
+						mouseInteraction={mouseInteraction === "yes"}
+					/>
+				</div>
+				<Items
+					collisionAxis="y"
+					minEmptyHeight={isFullscreen ? 560 : Math.max(minHeight - padding * 2, 80)}
+					style={{
+						position: "relative",
+						zIndex: 1,
+						display: "flex",
+						flexDirection: "column",
+						minHeight: contentMinHeight,
+						height: isFullscreen ? "100%" : undefined,
+						padding: `${padding}px`,
+						boxSizing: "border-box",
+					}}
+				/>
+			</section>
+		);
+	},
 };
