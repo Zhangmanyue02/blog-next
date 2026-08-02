@@ -45,11 +45,9 @@ export const HeadingBlock: ComponentConfig<HeadingBlockProps> = {
 	render: ({ text, level, align }) => {
 		const Tag = level;
 		return (
-			<div className="w-full px-6 py-4">
-				<div className="max-w-3xl mx-auto" style={{ textAlign: align }}>
-					<Tag className={levelClass[level]}>{text}</Tag>
-				</div>
-			</div>
+			<Tag className={levelClass[level]} style={{ textAlign: align }}>
+				{text}
+			</Tag>
 		);
 	},
 };

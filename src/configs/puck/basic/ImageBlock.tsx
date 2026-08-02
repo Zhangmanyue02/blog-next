@@ -1,17 +1,16 @@
 import type { ComponentConfig } from "@puckeditor/core";
+import type { CSSProperties } from "react";
 
 export type ImageBlockProps = {
 	src: string;
 	alt: string;
 	caption: string;
-	width: "full" | "wide" | "narrow";
+	width: number;
+	height: number;
+	objectFit: "cover" | "contain" | "fill" | "none" | "scale-down";
 };
 
-const widthClass: Record<ImageBlockProps["width"], string> = {
-	full: "max-w-6xl",
-	wide: "max-w-4xl",
-	narrow: "max-w-2xl",
-};
+const toCssSize = (value: number): string | undefined => (value > 0 ? `${value}px` : undefined);
 
 export const ImageBlock: ComponentConfig<ImageBlockProps> = {
 	label: "图片",
@@ -19,13 +18,17 @@ export const ImageBlock: ComponentConfig<ImageBlockProps> = {
 		src: { type: "text", label: "图片 URL" },
 		alt: { type: "text", label: "替代文本" },
 		caption: { type: "text", label: "图注" },
-		width: {
+		width: { type: "number", label: "宽度(px，0=自适应)" },
+		height: { type: "number", label: "高度(px，0=自适应)" },
+		objectFit: {
 			type: "select",
-			label: "宽度",
+			label: "填充方式",
 			options: [
-				{ label: "全宽", value: "full" },
-				{ label: "较宽", value: "wide" },
-				{ label: "较窄", value: "narrow" },
+				{ label: "cover", value: "cover" },
+				{ label: "contain", value: "contain" },
+				{ label: "fill", value: "fill" },
+				{ label: "none", value: "none" },
+				{ label: "scale-down", value: "scale-down" },
 			],
 		},
 	},
@@ -33,14 +36,25 @@ export const ImageBlock: ComponentConfig<ImageBlockProps> = {
 		src: "https://placehold.co/1200x675",
 		alt: "配图",
 		caption: "",
-		width: "wide",
+		width: 0,
+		height: 0,
+		objectFit: "cover",
 	},
-	render: ({ src, alt, caption, width }) => (
-		<figure className="w-full px-6 py-6">
-			<div className={`mx-auto ${widthClass[width]}`}>
-				<img src={src} alt={alt} className="w-full h-auto object-cover" />
-				{caption && <figcaption className="mt-3 text-center text-sm text-muted-foreground">{caption}</figcaption>}
-			</div>
-		</figure>
-	),
+	render: ({ src, alt, caption, width, height, objectFit }) => {
+		const cssWidth = toCssSize(width);
+		const cssHeight = toCssSize(height);
+		const imgStyle: CSSProperties = {
+			width: cssWidth ?? "100%",
+			height: cssHeight ?? "auto",
+			objectFit,
+			maxWidth: "100%",
+		};
+
+		return (
+			<figure className="block" style={{ width: cssWidth ?? "100%" }}>
+				<img src={src} alt={alt} className="block" style={imgStyle} />
+				{caption ? <figcaption className="mt-2 text-sm text-muted-foreground">{caption}</figcaption> : null}
+			</figure>
+		);
+	},
 };

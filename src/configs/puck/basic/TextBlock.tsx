@@ -41,12 +41,8 @@ export const TextBlock: ComponentConfig<TextBlockProps> = {
 		align: "left",
 	},
 	render: ({ content, size, align }) => (
-		<div className="w-full px-6 py-2">
-			<div className="max-w-3xl mx-auto">
-				<p className={`text-muted-foreground whitespace-pre-wrap ${sizeClass[size]}`} style={{ textAlign: align }}>
-					{content}
-				</p>
-			</div>
-		</div>
+		<p className={`text-muted-foreground whitespace-pre-wrap ${sizeClass[size]}`} style={{ textAlign: align }}>
+			{content}
+		</p>
 	),
 };
