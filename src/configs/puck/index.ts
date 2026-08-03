@@ -4,15 +4,10 @@ import {
 	TextBlock,
 	ImageBlock,
 	ButtonBlock,
-	DividerBlock,
-	SpacerBlock,
 	FlexBlock,
 	GridBlock,
 	GlassBlock,
-	NavbarBlock,
 	FooterBlock,
-	BlogHeroBlock,
-	ArticleListBlock,
 	ArticleHeaderBlock,
 	ArticleBodyBlock,
 	AuthorBioBlock,
@@ -20,7 +15,6 @@ import {
 	ProfileBlock,
 	TimelineBlock,
 	ArchiveListBlock,
-	CategoriesBlock,
 	TagCloudBlock,
 } from "./basic";
 import { advancedComponentMap } from "./advanced";
@@ -28,7 +22,7 @@ import { advancedComponentMap } from "./advanced";
 const blogCategories: Config["categories"] = {
 	基础: {
 		title: "基础",
-		components: ["HeadingBlock", "TextBlock", "ImageBlock", "ButtonBlock", "DividerBlock", "SpacerBlock"],
+		components: ["HeadingBlock", "TextBlock", "ImageBlock", "ButtonBlock"],
 		defaultExpanded: true,
 	},
 	布局: {
@@ -37,12 +31,7 @@ const blogCategories: Config["categories"] = {
 	},
 	站点: {
 		title: "站点",
-		components: ["NavbarBlock", "FooterBlock"],
-		defaultExpanded: true,
-	},
-	首页: {
-		title: "首页",
-		components: ["BlogHeroBlock", "ArticleListBlock"],
+		components: ["FooterBlock"],
 		defaultExpanded: true,
 	},
 	文章: {
@@ -55,7 +44,7 @@ const blogCategories: Config["categories"] = {
 	},
 	归档: {
 		title: "归档",
-		components: ["ArchiveListBlock", "CategoriesBlock", "TagCloudBlock"],
+		components: ["ArchiveListBlock", "TagCloudBlock"],
 	},
 };
 
@@ -64,15 +53,10 @@ const blogComponents = {
 	TextBlock,
 	ImageBlock,
 	ButtonBlock,
-	DividerBlock,
-	SpacerBlock,
 	FlexBlock,
 	GridBlock,
 	GlassBlock,
-	NavbarBlock,
 	FooterBlock,
-	BlogHeroBlock,
-	ArticleListBlock,
 	ArticleHeaderBlock,
 	ArticleBodyBlock,
 	AuthorBioBlock,
@@ -80,7 +64,6 @@ const blogComponents = {
 	ProfileBlock,
 	TimelineBlock,
 	ArchiveListBlock,
-	CategoriesBlock,
 	TagCloudBlock,
 };
 
