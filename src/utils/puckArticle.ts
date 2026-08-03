@@ -2,9 +2,10 @@ import type { Data } from '@puckeditor/core';
 import type { BlogPost } from '@/type/blog';
 import type { PuckArchiveGroup, PuckArticlePost } from '@/configs/puck/types';
 
-const ARTICLE_BLOCK_TYPES = new Set(['ArticleHeaderBlock', 'ArticleBodyBlock']);
+/** 文章详情默认布局（CMS Page slug / 日后 Template code） */
+export const DEFAULT_POST_LAYOUT_CODE = 'post-detail';
 
-/** 文章详情页在缺少文章布局时的兜底结构 */
+/** 详情布局缺失时的兜底结构 */
 export const ARTICLE_LAYOUT_FALLBACK: Data = {
 	root: { props: {} },
 	content: [
@@ -27,19 +28,9 @@ export function parsePuckData(content: string | undefined | null): Data | null {
 	return null;
 }
 
-/** 页面 JSON 是否包含文章详情相关块（而非仅归档列表） */
-export function hasArticleBlocks(data: Data): boolean {
-	return data.content.some((item) => ARTICLE_BLOCK_TYPES.has(item.type as string));
-}
-
-/**
- * 解析文章详情布局：仅当 CMS 页含文章头/正文时才用该页；
- * 否则用兜底布局（避免 /post 归档页被误当成详情壳）。
- */
-export function resolveArticleLayout(content: string | undefined | null): Data {
-	const data = parsePuckData(content);
-	if (data && hasArticleBlocks(data)) return data;
-	return ARTICLE_LAYOUT_FALLBACK;
+/** 解析详情布局 JSON；无效时回退兜底 */
+export function resolvePostLayout(content: string | undefined | null): Data {
+	return parsePuckData(content) ?? ARTICLE_LAYOUT_FALLBACK;
 }
 
 export function toPuckArticlePost(post: BlogPost): PuckArticlePost {

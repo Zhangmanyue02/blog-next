@@ -3,7 +3,11 @@ import { Render } from '@puckeditor/core/rsc';
 import { getPageBySlug } from '@/api/services/pageService';
 import { getBlogPostBySlug } from '@/api/services/blogPostService';
 import { getAdvancedConfig } from '@/configs/puck';
-import { resolveArticleLayout, toPuckArticlePost } from '@/utils/puckArticle';
+import {
+	DEFAULT_POST_LAYOUT_CODE,
+	resolvePostLayout,
+	toPuckArticlePost,
+} from '@/utils/puckArticle';
 import type { PuckArticleMetadata } from '@/configs/puck/types';
 
 type Props = {
@@ -14,15 +18,14 @@ export default async function PostDetailPage({ params }: Props) {
 	const { slug } = await params;
 	if (!slug) notFound();
 
-	const [layoutPage, post] = await Promise.all([
-		getPageBySlug('post'),
-		getBlogPostBySlug(slug),
-	]);
-
+	const post = await getBlogPostBySlug(slug);
 	if (!post) notFound();
 
-	// /post 页当前是归档列表，不能直接当详情壳；无文章块时用兜底布局
-	const data = resolveArticleLayout(layoutPage?.content);
+	// 详情壳：文章 templateCode → 默认 post-detail Page（公开可读）
+	const layoutCode = post.templateCode || DEFAULT_POST_LAYOUT_CODE;
+	const layoutPage = await getPageBySlug(layoutCode);
+	const data = resolvePostLayout(layoutPage?.content);
+
 	const metadata: PuckArticleMetadata = {
 		post: toPuckArticlePost(post),
 	};
