@@ -15,10 +15,10 @@ export interface BlogTagBrief {
 export interface BlogPost {
 	id?: string;
 	title?: string;
-	slug?: string;
 	summary?: string;
 	coverImage?: string;
 	content?: string;
+	/** 详情页布局：关联 CMS Page slug / 模板编码 */
 	templateCode?: string;
 	categoryId?: string | null;
 	category?: BlogCategoryBrief | null;

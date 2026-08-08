@@ -4,7 +4,6 @@ export interface PuckArticlePost {
 	summary?: string;
 	content?: string;
 	coverImage?: string;
-	slug?: string;
 	createTime?: string;
 	createBy?: string;
 }

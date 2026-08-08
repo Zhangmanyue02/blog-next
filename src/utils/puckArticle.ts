@@ -44,7 +44,6 @@ export function toPuckArticlePost(post: BlogPost): PuckArticlePost {
 		summary: post.summary,
 		content: post.content,
 		coverImage: post.coverImage,
-		slug: post.slug,
 		createTime: post.createTime,
 		createBy: post.createBy,
 	};
@@ -56,8 +55,7 @@ function formatArchiveDate(createTime?: string): string {
 }
 
 function resolvePostHref(post: BlogPost): string {
-	const key = post.slug || post.id;
-	return key ? `/post/${key}` : '#';
+	return post.id ? `/post/${post.id}` : '#';
 }
 
 function toArchivePostItem(post: BlogPost): PuckArchivePostItem | null {

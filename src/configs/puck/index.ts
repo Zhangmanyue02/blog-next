@@ -1,4 +1,5 @@
 import type { Config, Data } from "@puckeditor/core";
+import { advancedComponentMap, advancedSidebarComponents } from "./advanced";
 import {
 	ArchiveListBlock,
 	ArticleBodyBlock,
@@ -17,7 +18,6 @@ import {
 	TextBlock,
 	TimelineBlock,
 } from "./basic";
-import { advancedComponentMap, advancedSidebarComponents } from "./advanced";
 
 const blogCategories: Config["categories"] = {
 	基础: {

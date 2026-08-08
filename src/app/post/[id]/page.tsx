@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Render } from '@puckeditor/core/rsc';
 import { getPageBySlug } from '@/api/services/pageService';
-import { getBlogPostBySlug } from '@/api/services/blogPostService';
+import { getBlogPostById } from '@/api/services/blogPostService';
 import { getAdvancedConfig } from '@/configs/puck';
 import {
 	DEFAULT_POST_LAYOUT_CODE,
@@ -11,14 +11,14 @@ import {
 import type { PuckArticleMetadata } from '@/configs/puck/types';
 
 type Props = {
-	params: Promise<{ slug: string }>;
+	params: Promise<{ id: string }>;
 };
 
 export default async function PostDetailPage({ params }: Props) {
-	const { slug } = await params;
-	if (!slug) notFound();
+	const { id } = await params;
+	if (!id) notFound();
 
-	const post = await getBlogPostBySlug(slug);
+	const post = await getBlogPostById(id);
 	if (!post) notFound();
 
 	// 详情壳：文章 templateCode → 默认 post-detail Page（公开可读）
