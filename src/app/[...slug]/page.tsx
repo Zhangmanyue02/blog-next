@@ -3,7 +3,12 @@ import { Render } from '@puckeditor/core/rsc';
 import { getPageBySlug } from '@/api/services/pageService';
 import { getPublishedBlogPosts } from '@/api/services/blogPostService';
 import { getAdvancedConfig } from '@/configs/puck';
-import { buildArchiveGroups, parsePuckData } from '@/utils/puckArticle';
+import {
+	buildArchiveCategories,
+	buildArchiveGroups,
+	buildArchiveTags,
+	parsePuckData,
+} from '@/utils/puckArticle';
 import type { PuckArticleMetadata } from '@/configs/puck/types';
 
 type Props = {
@@ -36,6 +41,8 @@ export default async function ContentPage({ params }: Props) {
 
 	const metadata: PuckArticleMetadata = {
 		archiveGroups: buildArchiveGroups(posts),
+		archiveCategories: buildArchiveCategories(posts),
+		archiveTags: buildArchiveTags(posts),
 	};
 
 	return (

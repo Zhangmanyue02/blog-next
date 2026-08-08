@@ -9,10 +9,20 @@ export interface PuckArticlePost {
 	createBy?: string;
 }
 
+export interface PuckArchiveTagBrief {
+	id: string;
+	name: string;
+	color?: string;
+}
+
 export interface PuckArchivePostItem {
 	title: string;
 	href: string;
 	date: string;
+	categoryId?: string | null;
+	categoryName?: string;
+	tagIds?: string[];
+	tags?: PuckArchiveTagBrief[];
 }
 
 export interface PuckArchiveGroup {
@@ -20,9 +30,19 @@ export interface PuckArchiveGroup {
 	posts: PuckArchivePostItem[];
 }
 
+export interface PuckArchiveFilterOption {
+	id: string;
+	name: string;
+	color?: string;
+}
+
 export interface PuckArticleMetadata {
 	/** 文章详情（文章头 / 正文） */
 	post?: PuckArticlePost;
 	/** 归档列表（按年分组，由页面层注入） */
 	archiveGroups?: PuckArchiveGroup[];
+	/** 归档分类筛选项（可由页面注入；缺省时从 posts 推导） */
+	archiveCategories?: PuckArchiveFilterOption[];
+	/** 归档标签筛选项（可由页面注入；缺省时从 posts 推导） */
+	archiveTags?: PuckArchiveFilterOption[];
 }
