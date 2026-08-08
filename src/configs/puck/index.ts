@@ -1,21 +1,21 @@
 import type { Config, Data } from "@puckeditor/core";
 import {
-	HeadingBlock,
-	TextBlock,
-	ImageBlock,
+	ArchiveListBlock,
+	ArticleBodyBlock,
+	ArticleHeaderBlock,
+	AuthorBioBlock,
 	ButtonBlock,
 	FlexBlock,
-	GridBlock,
-	GlassBlock,
 	FooterBlock,
-	ArticleHeaderBlock,
-	ArticleBodyBlock,
-	AuthorBioBlock,
-	RelatedPostsBlock,
+	GridBlock,
+	HeadingBlock,
+	ImageBlock,
+	NavbarBlock,
 	ProfileBlock,
-	TimelineBlock,
-	ArchiveListBlock,
+	RelatedPostsBlock,
 	TagCloudBlock,
+	TextBlock,
+	TimelineBlock,
 } from "./basic";
 import { advancedComponentMap } from "./advanced";
 
@@ -27,11 +27,11 @@ const blogCategories: Config["categories"] = {
 	},
 	布局: {
 		title: "布局",
-		components: ["FlexBlock", "GridBlock", "GlassBlock"],
+		components: ["FlexBlock", "GridBlock"],
 	},
 	站点: {
 		title: "站点",
-		components: ["FooterBlock"],
+		components: ["NavbarBlock", "FooterBlock"],
 		defaultExpanded: true,
 	},
 	文章: {
@@ -55,7 +55,7 @@ const blogComponents = {
 	ButtonBlock,
 	FlexBlock,
 	GridBlock,
-	GlassBlock,
+	NavbarBlock,
 	FooterBlock,
 	ArticleHeaderBlock,
 	ArticleBodyBlock,

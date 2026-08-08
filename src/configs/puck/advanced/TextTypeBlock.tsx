@@ -24,6 +24,8 @@ export type TextTypeBlockProps = {
 	fontSize: number;
 	paddingY: number;
 	textAlign: "left" | "center" | "right";
+	/** 占满父级剩余高度（flex-1） */
+	fillRemaining: YesNo;
 };
 
 const yesNo = {
@@ -89,6 +91,7 @@ export const TextTypeBlock: ComponentConfig<TextTypeBlockProps> = {
 		},
 		className: { type: "text", label: "额外 class" },
 		paddingY: { type: "number", label: "上下内边距(px)" },
+		fillRemaining: { ...yesNo, label: "占满剩余高度" },
 	},
 	defaultProps: {
 		sentences: [
@@ -115,6 +118,7 @@ export const TextTypeBlock: ComponentConfig<TextTypeBlockProps> = {
 		fontSize: 36,
 		paddingY: 24,
 		textAlign: "center",
+		fillRemaining: "yes",
 	},
 	render: ({
 		sentences,
@@ -137,13 +141,19 @@ export const TextTypeBlock: ComponentConfig<TextTypeBlockProps> = {
 		fontSize,
 		paddingY,
 		textAlign,
+		fillRemaining,
 	}) => {
 		const pairs = sentences.filter((item) => item.text.trim());
 		const lines = pairs.map((item) => item.text);
 		const textColors = pairs.map((item) => item.color);
+		// 缺省/旧数据按「占满」处理
+		const shouldFill = (fillRemaining ?? "yes") === "yes";
 
 		return (
-			<section className="w-full px-4" style={{ paddingTop: paddingY, paddingBottom: paddingY, textAlign }}>
+			<section
+				className={`w-full px-4${shouldFill ? " flex min-h-0 flex-1 flex-col justify-center" : ""}`}
+				style={{ paddingTop: paddingY, paddingBottom: paddingY, textAlign }}
+			>
 				<TextType
 					text={lines.length > 0 ? lines : [""]}
 					as={as}
