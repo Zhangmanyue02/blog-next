@@ -535,6 +535,26 @@ const MagicBento: FC<BentoProps> = ({
               grid-column: 4;
               grid-row: 3;
             }
+
+            .card-responsive .card:nth-child(7) {
+              grid-column: 1;
+              grid-row: 4;
+            }
+
+            .card-responsive .card:nth-child(8) {
+              grid-column: 2;
+              grid-row: 4;
+            }
+
+            .card-responsive .card:nth-child(9) {
+              grid-column: 3;
+              grid-row: 4;
+            }
+
+            .card-responsive .card:nth-child(10) {
+              grid-column: 4;
+              grid-row: 4;
+            }
           }
           
           .card--border-glow::after {

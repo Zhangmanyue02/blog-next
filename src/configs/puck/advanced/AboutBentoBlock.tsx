@@ -49,19 +49,19 @@ const DEFAULT_ABOUT_CARDS: AboutBentoBlockProps["cards"] = [
 		color: CARD_BG,
 		label: "Profile",
 		title: "Alvin",
-		description: "用文字把做过的事写清楚，方便未来的自己，也方便同行。",
+		description: "喜欢把复杂的事讲明白，也喜欢把做过的事留下来。",
 	},
 	{
 		color: CARD_BG,
 		label: "Role",
 		title: "前端工程师",
-		description: "关注组件体系、可维护性与内容站点体验。",
+		description: "负责界面与交互，对可用性和观感负责。",
 	},
 	{
 		color: CARD_BG,
 		label: "Now",
 		title: "正在做的事",
-		description: "搭建个人博客与管理后台：页面编排、文章归档，以及可持续迭代的组件体系。",
+		description: "个人站点：博客前台 + 页面编排后台。",
 	},
 	{
 		color: CARD_BG,
@@ -73,13 +73,37 @@ const DEFAULT_ABOUT_CARDS: AboutBentoBlockProps["cards"] = [
 		color: CARD_BG,
 		label: "Notes",
 		title: "写作",
-		description: "记录工程实践、工具选择，以及偶尔的生活观察。",
+		description: "工程笔记、工具札记，偶尔也写生活观察。",
 	},
 	{
 		color: CARD_BG,
 		label: "Connect",
 		title: "联系",
-		description: "欢迎通过 GitHub 或邮件交流想法与反馈。",
+		description: "GitHub 或邮件都可以，欢迎交流。",
+	},
+	{
+		color: CARD_BG,
+		label: "Path",
+		title: "一路走来",
+		description: "从业务页面做起，慢慢走到组件化与内容站点。",
+	},
+	{
+		color: CARD_BG,
+		label: "Taste",
+		title: "审美偏好",
+		description: "克制、留白，少一点装饰，多一点呼吸感。",
+	},
+	{
+		color: CARD_BG,
+		label: "Read",
+		title: "最近在读",
+		description: "设计系统、产品体验，以及把事情写清楚的书。",
+	},
+	{
+		color: CARD_BG,
+		label: "Life",
+		title: "工作之外",
+		description: "散步、咖啡，偶尔拍点胶片。",
 	},
 ];
 
