@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 export interface BentoCardProps {
 	color?: string;
 	title?: string;
@@ -20,6 +22,8 @@ export interface BentoProps {
 	glowColor?: string;
 	clickEffect?: boolean;
 	enableMagnetism?: boolean;
+	/** 自定义卡片正文；返回节点时替换默认 description */
+	renderCardBody?: (card: BentoCardProps, index: number) => ReactNode | null | undefined;
 }
 
 export const DEFAULT_BENTO_CARDS: BentoCardProps[] = [

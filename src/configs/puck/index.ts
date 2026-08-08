@@ -17,7 +17,7 @@ import {
 	TextBlock,
 	TimelineBlock,
 } from "./basic";
-import { advancedComponentMap } from "./advanced";
+import { advancedComponentMap, advancedSidebarComponents } from "./advanced";
 
 const blogCategories: Config["categories"] = {
 	基础: {
@@ -40,7 +40,7 @@ const blogCategories: Config["categories"] = {
 	},
 	关于: {
 		title: "关于",
-		components: ["ProfileBlock", "TimelineBlock"],
+		components: ["ProfileBlock", "TimelineBlock", "AboutBentoBlock"],
 	},
 	归档: {
 		title: "归档",
@@ -79,7 +79,7 @@ export const getAdvancedConfig = (): Config => ({
 		...blogCategories,
 		高级: {
 			title: "高级",
-			components: Object.keys(advancedComponentMap),
+			components: advancedSidebarComponents,
 		},
 	},
 	components: {

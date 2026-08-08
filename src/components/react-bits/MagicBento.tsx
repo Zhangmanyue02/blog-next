@@ -478,6 +478,7 @@ const MagicBento: FC<BentoProps> = ({
 	glowColor = DEFAULT_GLOW_COLOR,
 	clickEffect = true,
 	enableMagnetism = true,
+	renderCardBody,
 }) => {
 	const gridRef = useRef<HTMLDivElement>(null);
 	const isMobile = useMobileDetection();
@@ -641,6 +642,31 @@ const MagicBento: FC<BentoProps> = ({
 							"--glow-radius": "200px",
 						} as CSSProperties;
 
+						const customBody = renderCardBody?.(card, index);
+						const cardInner = (
+							<>
+								<div className="card__header flex justify-between gap-3 relative text-white">
+									<span className="card__label text-base">{card.label}</span>
+								</div>
+								<div className="card__content flex flex-col relative text-white">
+									{card.title ? (
+										<h3
+											className={`card__title font-normal text-base m-0 mb-1 ${textAutoHide && !customBody ? "text-clamp-1" : ""}`}
+										>
+											{card.title}
+										</h3>
+									) : null}
+									{customBody ?? (
+										<p
+											className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? "text-clamp-2" : ""}`}
+										>
+											{card.description}
+										</p>
+									)}
+								</div>
+							</>
+						);
+
 						if (enableStars) {
 							return (
 								<ParticleCard
@@ -654,36 +680,14 @@ const MagicBento: FC<BentoProps> = ({
 									clickEffect={clickEffect}
 									enableMagnetism={enableMagnetism}
 								>
-									<div className="card__header flex justify-between gap-3 relative text-white">
-										<span className="card__label text-base">{card.label}</span>
-									</div>
-									<div className="card__content flex flex-col relative text-white">
-										<h3 className={`card__title font-normal text-base m-0 mb-1 ${textAutoHide ? "text-clamp-1" : ""}`}>
-											{card.title}
-										</h3>
-										<p
-											className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? "text-clamp-2" : ""}`}
-										>
-											{card.description}
-										</p>
-									</div>
+									{cardInner}
 								</ParticleCard>
 							);
 						}
 
 						return (
 							<div key={`${card.title}-${index}`} className={baseClassName} style={cardStyle}>
-								<div className="card__header flex justify-between gap-3 relative text-white">
-									<span className="card__label text-base">{card.label}</span>
-								</div>
-								<div className="card__content flex flex-col relative text-white">
-									<h3 className={`card__title font-normal text-base m-0 mb-1 ${textAutoHide ? "text-clamp-1" : ""}`}>
-										{card.title}
-									</h3>
-									<p className={`card__description text-xs leading-5 opacity-90 ${textAutoHide ? "text-clamp-2" : ""}`}>
-										{card.description}
-									</p>
-								</div>
+								{cardInner}
 							</div>
 						);
 					})}
