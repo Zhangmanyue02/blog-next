@@ -3,7 +3,7 @@ import { getNavList } from '@/api/services/pageService';
 
 export default async function HomePage() {
   const items = (await getNavList()) ?? [];
-  const first = items[0];
+  const first = [...items].sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0))[0];
   if (first) {
     redirect(`/${first.slug}`);
   }
