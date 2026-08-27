@@ -1,0 +1,52 @@
+{
+  "include": [
+    "src/**/*.{ts,tsx}",
+    "Dockerfile",
+    ".github/workflows/*.{yml,yaml}"
+  ],
+  "exclude": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/dist/**",
+    "**/.env*",
+    "**/pnpm-lock.yaml"
+  ],
+  "rules": [
+    {
+      "path": "src/app/post/**/*.tsx",
+      "rule": "文章详情页审查要点：1) 路由使用 /post/[id]（数字 id），禁止回退 slug 方案；2) API 调用 getBlogPostById；3) 404 处理当文章不存在；4) Puck 渲染数据与后端 ArticleDetail 类型一致；5) 链接跳转统一用 id。"
+    },
+    {
+      "path": "src/app/[...slug]/**/*.tsx",
+      "rule": "CMS 动态页面审查要点：1) slug 拼接与 pageService getPageBySlug 一致；2) Puck 数据解析失败 graceful fallback；3) admin/edit 路由权限（若有时）不在前台暴露写操作。"
+    },
+    {
+      "path": "src/app/**/*.tsx",
+      "rule": "Next.js App Router 审查要点：1) Server Component 与 Client Component 边界正确（'use client' 仅必要时）；2) 数据获取在 Server Component 或 Route Handler，避免客户端暴露内部 API；3) generateMetadata/SEO 与页面内容一致；4) not-found/loading/error 边界完整；5) 动态路由 params 使用 await（Next 15）；6) 生产环境 layout 若 force-dynamic 需说明原因，避免不必要的全站动态化。"
+    },
+    {
+      "path": "src/api/**/*.ts",
+      "rule": "API Client 审查要点：1) 使用统一 apiClient，baseURL 来自 NEXT_PUBLIC_API_BASE_URL；2) 错误处理与类型返回值明确；3) 不在客户端硬编码生产 IP/密钥；4) fetch 缓存策略与 revalidate 合理；5) 请求路径与 alvin-nest /api/v1 一致。"
+    },
+    {
+      "path": "src/configs/puck/**/*.{ts,tsx}",
+      "rule": "Puck 区块审查要点：1) Block 与 View 分离，fields 类型与 types.ts 一致；2) render 中避免 dangerouslySetInnerHTML 除非内容已消毒；3) 服务端/客户端组件边界正确；4) 新增 Block 需在 index.ts 注册；5) 与 slash-admin Puck 配置保持字段兼容，避免前台后台渲染不一致。"
+    },
+    {
+      "path": "src/components/react-bits/**/*.{ts,tsx}",
+      "rule": "React Bits 动效组件审查要点：1) 'use client' 标记；2) requestAnimationFrame/useEffect 清理防止内存泄漏；3) 避免 SSR 访问 window/document 未守卫；4) 性能：大列表/动画注意 reduced-motion；5) 不阻塞首屏渲染。"
+    },
+    {
+      "path": ".github/workflows/*.{yml,yaml}",
+      "rule": "GitHub Actions 审查要点：1) 密钥使用 secrets/vars，不写明文 token；2) pnpm cache 与 frozen-lockfile；3) NEXT_PUBLIC_API_BASE_URL 从 vars 注入；4) deploy 依赖 CI 成功后再执行。"
+    },
+    {
+      "path": "Dockerfile",
+      "rule": "Dockerfile 审查要点：1) 多阶段构建，生产镜像不含 devDependencies；2) ARG NEXT_PUBLIC_API_BASE_URL 可配置，默认值可接受但文档说明；3) 使用非 root 用户（如可）；4) EXPOSE 3000 与 start 命令一致。"
+    },
+    {
+      "path": "src/**/*.{ts,tsx}",
+      "rule": "通用前端审查：1) TypeScript 严格类型，禁止 any；2) 异步错误必须处理；3) 可访问性：交互元素有 label/aria；4) 图片用 next/image 若适用；5) 环境相关配置走 env 变量。"
+    }
+  ]
+}

@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:puckeditor.com)",
-      "Bash(pnpm build *)",
-      "Bash(pnpm exec *)"
-    ]
-  }
-}
