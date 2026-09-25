@@ -26,11 +26,11 @@
     },
     {
       "path": "src/api/**/*.ts",
-      "rule": "API Client 审查要点：1) 使用统一 apiClient，baseURL 来自 NEXT_PUBLIC_API_BASE_URL；2) 错误处理与类型返回值明确；3) 不在客户端硬编码生产 IP/密钥；4) fetch 缓存策略与 revalidate 合理；5) 请求路径与 alvin-nest /api/v1 一致。"
+      "rule": "API Client 审查要点：1) 使用统一 apiClient，baseURL 来自 NEXT_PUBLIC_API_BASE_URL；2) 错误处理与类型返回值明确；3) 不在客户端硬编码生产 IP/密钥；4) fetch 缓存策略与 revalidate 合理；5) 请求路径与 blog-nest /api/v1 一致。"
     },
     {
       "path": "src/configs/puck/**/*.{ts,tsx}",
-      "rule": "Puck 区块审查要点：1) Block 与 View 分离，fields 类型与 types.ts 一致；2) render 中避免 dangerouslySetInnerHTML 除非内容已消毒；3) 服务端/客户端组件边界正确；4) 新增 Block 需在 index.ts 注册；5) 与 slash-admin Puck 配置保持字段兼容，避免前台后台渲染不一致。"
+      "rule": "Puck 区块审查要点：1) Block 与 View 分离，fields 类型与 types.ts 一致；2) render 中避免 dangerouslySetInnerHTML 除非内容已消毒；3) 服务端/客户端组件边界正确；4) 新增 Block 需在 index.ts 注册；5) 与 blog-admin Puck 配置保持字段兼容，避免前台后台渲染不一致。"
     },
     {
       "path": "src/components/react-bits/**/*.{ts,tsx}",
