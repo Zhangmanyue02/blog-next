@@ -1,12 +1,14 @@
-FROM node:20-alpine AS build-stage
+FROM node:20-bookworm-slim AS build-stage
 
 WORKDIR /app
 
-ARG NEXT_PUBLIC_API_BASE_URL=http://106.53.132.125
+ARG NEXT_PUBLIC_API_BASE_URL=http://alviny.me
 ENV NEXT_PUBLIC_API_BASE_URL=$NEXT_PUBLIC_API_BASE_URL
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 RUN npm config set registry https://registry.npmmirror.com/ \
-  && npm install -g pnpm \
+  && corepack enable \
+  && corepack prepare pnpm@10.29.3 --activate \
   && pnpm config set registry https://registry.npmmirror.com/
 
 COPY package.json pnpm-lock.yaml* ./
@@ -15,14 +17,16 @@ RUN pnpm install --frozen-lockfile || pnpm install
 COPY . .
 RUN pnpm run build
 
-FROM node:20-alpine AS production-stage
+FROM node:20-bookworm-slim AS production-stage
 
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 RUN npm config set registry https://registry.npmmirror.com/ \
-  && npm install -g pnpm \
+  && corepack enable \
+  && corepack prepare pnpm@10.29.3 --activate \
   && pnpm config set registry https://registry.npmmirror.com/
 
 COPY --from=build-stage /app/package.json ./package.json
