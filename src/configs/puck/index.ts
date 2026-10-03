@@ -1,5 +1,6 @@
 import type { Config, Data } from "@puckeditor/core";
 import { advancedComponentMap, advancedSidebarComponents } from "./advanced";
+import { getPortfolioConfig } from "./portfolio";
 import {
 	ArchiveListBlock,
 	ArticleBodyBlock,
@@ -94,3 +95,25 @@ export const getEmptyPuckData = (): Data => ({
 	content: [],
 	zones: {},
 });
+
+export { getPortfolioConfig };
+
+function assertNoSharedPuckComponentKeys(content: Config, portfolio: Config) {
+	const contentKeys = new Set(Object.keys(content.components || {}));
+	const shared = Object.keys(portfolio.components || {}).filter((key) => contentKeys.has(key));
+	if (shared.length > 0) {
+		throw new Error(`作品集与资讯组件包存在相同 key: ${shared.join(", ")}`);
+	}
+}
+
+export function resolveConfigByAppType(appType?: string): Config {
+	if (!appType || appType === "content") {
+		return getAdvancedConfig();
+	}
+	if (appType === "portfolio") {
+		const portfolio = getPortfolioConfig();
+		assertNoSharedPuckComponentKeys(getAdvancedConfig(), portfolio);
+		return portfolio;
+	}
+	throw new Error(`未支持的应用类型组件包: ${appType}`);
+}

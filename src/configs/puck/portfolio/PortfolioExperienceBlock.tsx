@@ -1,0 +1,41 @@
+import type { ComponentConfig } from "@puckeditor/core";
+import type { PortfolioExperienceViewItem, PuckPortfolioExperience, PuckPortfolioMetadata } from "./types";
+import { ExperienceView } from "./views/ExperienceView";
+import "./views/portfolio-view.css";
+
+const PREVIEW_ITEMS: PortfolioExperienceViewItem[] = [
+	{ company: "Linear", role: "Senior Design Engineer", period: "Mar 2024 – Present", brandColor: "#5E6AD2" },
+	{ company: "Vercel", role: "Product Designer", period: "Aug 2022 – Feb 2024", brandColor: "#0a0a0a" },
+	{ company: "Stripe", role: "Design Engineer", period: "Jun 2021 – Jul 2022", brandColor: "#635BFF" },
+	{ company: "Figma", role: "UI Engineer", period: "Sep 2019 – May 2021", brandColor: "#A259FF" },
+];
+
+function mapItems(live: PuckPortfolioExperience[] | null | undefined, editing: boolean): PortfolioExperienceViewItem[] {
+	if (Array.isArray(live)) {
+		return live.map((item) => ({
+			company: item.company?.trim() || "Company",
+			role: item.role ?? "",
+			period: item.period ?? "",
+			logoUrl: item.logoUrl || undefined,
+			brandColor: item.brandColor || undefined,
+		}));
+	}
+	return editing ? PREVIEW_ITEMS : [];
+}
+
+export type PortfolioExperienceBlockProps = Record<string, never>;
+
+export const PortfolioExperienceBlock: ComponentConfig<PortfolioExperienceBlockProps> = {
+	label: "经历",
+	fields: {},
+	defaultProps: {},
+	render: ({ puck }) => {
+		const items = mapItems((puck.metadata as PuckPortfolioMetadata | undefined)?.experiences, Boolean(puck.isEditing));
+		if (items.length === 0) return <div className="hidden" />;
+		return (
+			<div className="mx-auto w-full max-w-[40rem] px-6 pb-6 sm:px-10">
+				<ExperienceView items={items} />
+			</div>
+		);
+	},
+};
