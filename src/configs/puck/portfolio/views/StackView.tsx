@@ -57,6 +57,7 @@ export function StackView({
 	const chipRefs = useRef<Array<HTMLDivElement | null>>([]);
 	const [resetKey, setResetKey] = useState(0);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: resetKey 用于手动重跑物理世界
 	useEffect(() => {
 		if (!physicsEnabled) return;
 		const container = containerRef.current;
@@ -86,23 +87,15 @@ export function StackView({
 			const world = engine.world;
 
 			const wallThickness = 400;
-			const floor = Bodies.rectangle(
-				width / 2,
-				height - WALL_PAD + wallThickness / 2,
-				width * 3,
-				wallThickness,
-				{ isStatic: true },
-			);
+			const floor = Bodies.rectangle(width / 2, height - WALL_PAD + wallThickness / 2, width * 3, wallThickness, {
+				isStatic: true,
+			});
 			const leftWall = Bodies.rectangle(WALL_PAD - wallThickness / 2, height / 2, wallThickness, height * 4, {
 				isStatic: true,
 			});
-			const rightWall = Bodies.rectangle(
-				width - WALL_PAD + wallThickness / 2,
-				height / 2,
-				wallThickness,
-				height * 4,
-				{ isStatic: true },
-			);
+			const rightWall = Bodies.rectangle(width - WALL_PAD + wallThickness / 2, height / 2, wallThickness, height * 4, {
+				isStatic: true,
+			});
 			World.add(world, [floor, leftWall, rightWall]);
 
 			const states: ChipState[] = items.map((chip, i) => {
