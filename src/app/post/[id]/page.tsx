@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import { Render } from '@puckeditor/core/rsc';
 import { getPageBySlug } from '@/api/services/pageService';
 import { getBlogPostById } from '@/api/services/blogPostService';
-import { getAdvancedConfig } from '@/configs/puck';
+import { getAdvancedConfig } from "@/configs/puck";
+import { isContentApplication, resolveBoundApplicationType } from "@/lib/bound-application";
 import {
 	DEFAULT_POST_LAYOUT_CODE,
 	resolvePostLayout,
@@ -17,6 +18,11 @@ type Props = {
 export default async function PostDetailPage({ params }: Props) {
 	const { id } = await params;
 	if (!id) notFound();
+
+	const applicationType = await resolveBoundApplicationType();
+	if (!isContentApplication(applicationType)) {
+		notFound();
+	}
 
 	const post = await getBlogPostById(id);
 	if (!post) notFound();
