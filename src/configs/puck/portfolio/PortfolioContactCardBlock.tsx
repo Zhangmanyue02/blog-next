@@ -1,5 +1,5 @@
 import type { ComponentConfig } from "@puckeditor/core";
-import { EDITOR_SHADER_ITERATIONS, liveOrPreview, type PortfolioSocialViewItem, type PuckPortfolioMetadata } from "./types";
+import { EDITOR_SHADER_ITERATIONS, type PortfolioSocialViewItem } from "./types";
 import { ContactCardView } from "./views/ContactCardView";
 import "./views/portfolio-view.css";
 
@@ -24,47 +24,17 @@ const yesNo = {
 	],
 };
 
-const PREVIEW_SOCIALS: PortfolioSocialViewItem[] = [
-	{ label: "Email", href: "mailto:hello@example.com" },
+const HARDCODED_SOCIALS: PortfolioSocialViewItem[] = [
 	{ label: "LinkedIn", href: "https://www.linkedin.com", iconUrl: "https://cdn.simpleicons.org/linkedin/0A66C2" },
 	{ label: "X", href: "https://x.com", iconUrl: "https://cdn.simpleicons.org/x/111111" },
 ];
-
-function mapSocials(
-	profile: PuckPortfolioMetadata["profile"],
-	previewEmail: string,
-	editing: boolean,
-): PortfolioSocialViewItem[] {
-	const live = profile?.socials;
-	if (Array.isArray(live)) {
-		const items: PortfolioSocialViewItem[] = [];
-		if (profile?.email) {
-			items.push({ label: "Email", href: `mailto:${profile.email}` });
-		}
-		for (const item of live) {
-			if (!item.href) continue;
-			items.push({
-				label: item.label?.trim() || "Link",
-				href: item.href,
-				iconUrl: item.icon?.startsWith("http") ? item.icon : undefined,
-			});
-		}
-		return items;
-	}
-	if (!editing) {
-		return profile?.email ? [{ label: "Email", href: `mailto:${profile.email}` }] : [];
-	}
-	return PREVIEW_SOCIALS.map((item) =>
-		item.label === "Email" ? { ...item, href: `mailto:${previewEmail}` } : item,
-	);
-}
 
 export const PortfolioContactCardBlock: ComponentConfig<PortfolioContactCardBlockProps> = {
 	label: "联系卡片",
 	fields: {
 		headline: { type: "text", label: "标题" },
 		body: { type: "textarea", label: "正文" },
-		email: { type: "text", label: "邮箱（预览）" },
+		email: { type: "text", label: "邮箱" },
 		projectsHref: { type: "text", label: "项目链接" },
 		projectsLabel: { type: "text", label: "项目按钮文案" },
 		footerLine1: { type: "text", label: "页脚第一行" },
@@ -82,16 +52,19 @@ export const PortfolioContactCardBlock: ComponentConfig<PortfolioContactCardBloc
 		shader: "yes",
 	},
 	render: ({ puck, headline, body, email, projectsHref, projectsLabel, footerLine1, footerLine2, shader }) => {
-		const profile = (puck.metadata as PuckPortfolioMetadata | undefined)?.profile;
 		const editing = Boolean(puck.isEditing);
+		const socials: PortfolioSocialViewItem[] = [
+			...(email ? [{ label: "Email", href: `mailto:${email}` }] : []),
+			...HARDCODED_SOCIALS,
+		];
 		return (
 			<ContactCardView
 				headline={headline}
 				body={body}
-				email={liveOrPreview(profile?.email, email, editing)}
+				email={email}
 				projectsHref={projectsHref}
 				projectsLabel={projectsLabel}
-				socials={mapSocials(profile, email, editing)}
+				socials={socials}
 				footerLine1={footerLine1}
 				footerLine2={footerLine2}
 				shader={shader === "yes"}

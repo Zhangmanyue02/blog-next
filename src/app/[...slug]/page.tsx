@@ -21,21 +21,9 @@ type Props = {
 	params: Promise<{ slug: string[] }>;
 };
 
-function toPortfolioMetadata(payload: {
-	profile?: PuckPortfolioMetadata["profile"];
-	projects?: PuckPortfolioMetadata["projects"];
-	experiences?: PuckPortfolioMetadata["experiences"];
-	educations?: PuckPortfolioMetadata["educations"];
-	skills?: PuckPortfolioMetadata["skills"];
-	stackItems?: PuckPortfolioMetadata["stackItems"];
-}): PuckPortfolioMetadata {
+function toPortfolioMetadata(payload: { projects?: PuckPortfolioMetadata["projects"] }): PuckPortfolioMetadata {
 	return {
-		profile: payload.profile ?? null,
 		projects: payload.projects ?? [],
-		experiences: payload.experiences ?? [],
-		educations: payload.educations ?? [],
-		skills: payload.skills ?? [],
-		stackItems: payload.stackItems ?? [],
 	};
 }
 

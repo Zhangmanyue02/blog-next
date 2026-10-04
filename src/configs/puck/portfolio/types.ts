@@ -103,20 +103,6 @@ export type PortfolioContactCardViewProps = {
 	shaderIterations?: number;
 };
 
-export type PuckPortfolioProfile = {
-	displayName?: string | null;
-	greeting?: string | null;
-	headlineLine1?: string | null;
-	headlineLine2?: string | null;
-	tagline?: string | null;
-	bio?: string | null;
-	portraitUrl?: string | null;
-	portraitHoverUrl?: string | null;
-	email?: string | null;
-	socials?: Array<{ label?: string; href?: string; icon?: string }> | null;
-	polaroids?: Array<{ url?: string; alt?: string; rotate?: number }> | null;
-};
-
 export type PuckPortfolioProject = {
 	id?: string | number;
 	title?: string | null;
@@ -129,46 +115,9 @@ export type PuckPortfolioProject = {
 	href?: string | null;
 };
 
-export type PuckPortfolioExperience = {
-	company?: string | null;
-	role?: string | null;
-	period?: string | null;
-	brandColor?: string | null;
-	logoUrl?: string | null;
-};
-
-export type PuckPortfolioEducation = {
-	school?: string | null;
-	degree?: string | null;
-	period?: string | null;
-	logoUrl?: string | null;
-};
-
-export type PuckPortfolioSkill = {
-	name?: string | null;
-};
-
-export type PuckPortfolioStackItem = {
-	label?: string | null;
-	slug?: string | null;
-	bg?: string | null;
-	fg?: string | null;
-	iconUrl?: string | null;
-};
-
 export type PuckPortfolioMetadata = {
-	profile?: PuckPortfolioProfile | null;
 	projects?: PuckPortfolioProject[] | null;
-	experiences?: PuckPortfolioExperience[] | null;
-	educations?: PuckPortfolioEducation[] | null;
-	skills?: PuckPortfolioSkill[] | null;
-	stackItems?: PuckPortfolioStackItem[] | null;
 };
-
-export function liveOrPreview(live: string | null | undefined, preview: string, isEditing: boolean): string {
-	if (live?.trim()) return live;
-	return isEditing ? preview : "";
-}
 
 const ICON_KEY_SET = new Set<string>(PORTFOLIO_PROJECT_ICON_KEYS);
 
