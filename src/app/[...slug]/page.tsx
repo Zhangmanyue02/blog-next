@@ -21,9 +21,13 @@ type Props = {
 	params: Promise<{ slug: string[] }>;
 };
 
-function toPortfolioMetadata(payload: { projects?: PuckPortfolioMetadata["projects"] }): PuckPortfolioMetadata {
+function toPortfolioMetadata(
+	payload: { projects?: PuckPortfolioMetadata["projects"] },
+	pageSlug: string,
+): PuckPortfolioMetadata {
 	return {
 		projects: payload.projects ?? [],
+		pageSlug,
 	};
 }
 
@@ -64,7 +68,7 @@ export default async function ContentPage({ params }: Props) {
 				<Render
 					config={resolveConfigByAppType("portfolio")}
 					data={data}
-					metadata={toPortfolioMetadata(payload)}
+					metadata={toPortfolioMetadata(payload, slugStr)}
 				/>
 			</main>
 		);

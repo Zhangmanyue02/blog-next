@@ -1,6 +1,7 @@
 import type { ComponentConfig } from "@puckeditor/core";
 import {
 	mapPublicProject,
+	shouldShowProjectViewMore,
 	sliceProjects,
 	type PortfolioProjectViewItem,
 	type PuckPortfolioMetadata,
@@ -96,21 +97,29 @@ export const PortfolioProjectsGridBlock: ComponentConfig<PortfolioProjectsGridBl
 		viewMoreLabel: "View all projects",
 	},
 	render: ({ puck, limit, withHeadline, headline, subhead, viewMoreVisible, viewMoreHref, viewMoreLabel }) => {
-		const live = (puck.metadata as PuckPortfolioMetadata | undefined)?.projects;
+		const meta = puck.metadata as PuckPortfolioMetadata | undefined;
+		const live = meta?.projects;
 		const editing = Boolean(puck.isEditing);
 		const source = Array.isArray(live)
 			? live.map(mapPublicProject)
 			: editing
 				? PREVIEW_PROJECTS
 				: [];
+		const href = viewMoreHref || "/projects";
 		return (
 			<ProjectsGridView
 				items={sliceProjects(source, limit)}
 				withHeadline={withHeadline === "yes"}
 				headline={headline}
 				subhead={subhead}
-				viewMoreVisible={viewMoreVisible === "yes"}
-				viewMoreHref={viewMoreHref || "/projects"}
+				viewMoreVisible={shouldShowProjectViewMore({
+					enabled: viewMoreVisible === "yes",
+					limit,
+					total: Array.isArray(live) ? live.length : 0,
+					pageSlug: meta?.pageSlug,
+					viewMoreHref: href,
+				})}
+				viewMoreHref={href}
 				viewMoreLabel={viewMoreLabel}
 			/>
 		);

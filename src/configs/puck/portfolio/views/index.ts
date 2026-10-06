@@ -14,3 +14,4 @@ export { EducationView } from "./EducationView";
 export { SkillsView } from "./SkillsView";
 export { StackView } from "./StackView";
 export { ContactCardView } from "./ContactCardView";
+export { ProjectDetailView } from "./ProjectDetailView";
